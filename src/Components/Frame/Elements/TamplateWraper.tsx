@@ -6,7 +6,7 @@ const TamplateWraper: React.FC = () => {
       <div
         className="bg-white shadow-lg rounded-lg border border-gray-200"
         style={{
-          width: "600px",
+          width: "700px",
         }}
       >
         <img src="email-top.png" alt="" />
