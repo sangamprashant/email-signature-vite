@@ -1,11 +1,28 @@
 // tailwind.config.js
 module.exports = {
-  content: [
-    "./index.html", // Make sure to include this if your Vite project uses index.html
-    "./src/**/*.{js,jsx,ts,tsx}", // Adjust according to your file structure
-  ],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Arial", "Helvetica", "sans-serif"],
+        serif: ["Georgia", "Times New Roman", "serif"],
+        mono: ["Courier New", "Monaco", "monospace"],
+        roboto: ["Roboto", "sans-serif"],
+        opensans: ["Open Sans", "sans-serif"],
+        lato: ["Lato", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+        oswald: ["Oswald", "sans-serif"],
+        raleway: ["Raleway", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+        merriweather: ["Merriweather", "serif"],
+        playfair: ["Playfair Display", "serif"],
+        nunito: ["Nunito", "sans-serif"],
+        firacode: ["Fira Code", "monospace"],
+        inconsolata: ["Inconsolata", "monospace"],
+      },
+    },
   },
-  plugins: [],
-}
+  plugins: [
+    require('tailwind-scrollbar')({ nocompatible: true }),
+  ],
+};

@@ -1,6 +1,9 @@
+import Customize from "./SocialPart/Customize";
 
 const DeginsPart = () => {
-  return <div>DeginsPart</div>;
+  return <>
+    <Customize />
+  </>;
 };
 
 export default DeginsPart;

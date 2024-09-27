@@ -1,3 +1,5 @@
+import React from "react";
+
 export type m_items =
   | "Details"
   | "Image"
@@ -16,7 +18,7 @@ export type SocialLink = {
   bg: string;
   icon: string | React.ReactNode;
   link: string;
-  type: "svg" | "image";
+  type?: "svg" | "image";
 };
 
 export type SocialLinksState = {
@@ -30,5 +32,7 @@ export interface AppContextType {
   social: {
     social_links: SocialLinksState;
     setSocial_links: (links: SocialLinksState) => void; 
+    addLinks:(d:SocialLink) =>void
+    handleLinkChange:(e: React.ChangeEvent<HTMLInputElement>, index: number) =>void
   };
 }
