@@ -2,7 +2,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { AppContextType, m_items, SocialLink, SocialLinksState } from "../types";
+import { AppContextType, designProps, m_items, SocialLink, SocialLinksState } from "../types";
 
 import FacebookTwoToneIcon from '@mui/icons-material/FacebookTwoTone';
 
@@ -19,6 +19,21 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     links: [
     ],
   });
+  const [design, setDesign] = useState<designProps>({
+    signatureStyle:{
+      font:"font-sans",
+      tempColor:"pink",
+      fontScale:24,
+      lineSpacing:13,
+      spaceFromEmail:0,
+    },
+    images: {
+      images: ["https://via.placeholder.com/150", "https://via.placeholder.com/150"],
+      shape: "rounded",
+      size: 60,
+      position: "start"
+    }
+  })
 
   const { iconSize } = social_links
 
@@ -87,7 +102,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     <AppContext.Provider
       value={{
         menu: { m_item, setM_Item },
-        social: { social_links, setSocial_links, addLinks, handleLinkChange }
+        social: { social_links, setSocial_links, addLinks, handleLinkChange },
+        design,
       }}
     >
       {children}
@@ -99,6 +115,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       ...prev,
       links: [...prev.links, data],
     }));
+  }
+
+  async function handleDesign (){
+
   }
 
 };

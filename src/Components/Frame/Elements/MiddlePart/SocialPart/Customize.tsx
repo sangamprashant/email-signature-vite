@@ -409,7 +409,7 @@ const DecorativeLine = () => {
                 </table>
             </div>
 
-            <div className='mb-48 text-blue-600 hover:text-blue-300 cursor-pointer flex gap-2 items-center w-fit'><CiUndo /> <span>Reset to default</span></div>
+            <div className='mb-48 text-blue-300 hover:text-blue-600 cursor-pointer flex gap-2 items-center w-fit'><CiUndo /> <span>Reset to default</span></div>
         </>
     );
 };

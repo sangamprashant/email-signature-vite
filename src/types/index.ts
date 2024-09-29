@@ -27,12 +27,37 @@ export type SocialLinksState = {
   links: SocialLink[];
 };
 
+export interface SignatureStyleProps {
+  font:string;
+  tempColor:string;
+  fontScale:number;
+  lineSpacing:number;
+  spaceFromEmail:number;
+}
+
+export type ImageProps = "square" | "rounded" | "circle";
+export interface TemplateImageProps {
+  images: string[];
+  shape: ImageProps;
+  size: number;
+  position: "start" | "center" | "end";
+}
+
+export interface designProps {
+  signatureStyle:SignatureStyleProps;
+  images: TemplateImageProps;
+}
+
 export interface AppContextType {
   menu: Menu;
   social: {
     social_links: SocialLinksState;
-    setSocial_links: (links: SocialLinksState) => void; 
-    addLinks:(d:SocialLink) =>void
-    handleLinkChange:(e: React.ChangeEvent<HTMLInputElement>, index: number) =>void
+    setSocial_links: (links: SocialLinksState) => void;
+    addLinks: (d: SocialLink) => void;
+    handleLinkChange: (
+      e: React.ChangeEvent<HTMLInputElement>,
+      index: number
+    ) => void;
   };
+  design: designProps;
 }

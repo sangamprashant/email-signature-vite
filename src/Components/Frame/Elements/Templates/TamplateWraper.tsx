@@ -1,6 +1,10 @@
 import React from "react";
 
-const TamplateWraper: React.FC = () => {
+interface TamplateWraperProps {
+  children: React.ReactNode
+}
+
+const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
   return (
     <div>
       <div
@@ -11,7 +15,7 @@ const TamplateWraper: React.FC = () => {
       >
         <img src="email-top.png" alt="" />
         <div className="" id="tamplate-done">
-          <div className="p-4">tamplate goes here</div>
+          <div className="p-4">{children}</div>
         </div>
       </div>
       <div className="text-right mt-4">
