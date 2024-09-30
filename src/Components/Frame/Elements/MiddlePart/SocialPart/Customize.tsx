@@ -11,14 +11,13 @@ import SquareIcon from '@mui/icons-material/Square';
 import SquareOutlinedIcon from '@mui/icons-material/SquareOutlined';
 import VerticalAlignBottomIcon from '@mui/icons-material/VerticalAlignBottom';
 import { Input, Select, Switch } from 'antd';
-import { useState } from 'react';
 import { AiOutlineFacebook } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
 import fontOptions from "../../../../../Strings/FontsOptions";
 
 import { CiUndo } from "react-icons/ci";
 import { useAppContext } from '../../../../../context';
-import { handleActive } from '../../../../../functions';
+import { decorativeLineOptions, handleActive } from '../../../../../functions';
 
 const Customize = () => {
     return (
@@ -40,21 +39,23 @@ const SignatureStyle = () => {
                 <table className='table-auto w-full border-collapse'>
                     <caption className='text-left font-bold text-sm'>Signature Style</caption>
                     <tbody>
-                        {/* Font Selection */}
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin'>Font</td>
                             <td className='py-2 px-4'>
-                                <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5" value={design.design.signatureStyle.font}>
+                                <Select
+                                    className="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full"
+                                    value={design.design.signatureStyle.font}
+                                    onChange={(e) => handleDesign("font", e)}
+                                >
                                     {fontOptions.map((font) => (
-                                        <option key={font.value} value={font.value}>
+                                        <Select.Option key={font.value} value={font.value} className={font.value}>
                                             {font.name}
-                                        </option>
+                                        </Select.Option>
                                     ))}
-                                </select>
+                                </Select>
                             </td>
                         </tr>
 
-                        {/* Template Color Selection */}
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin size-1/2'>Tempate Color</td>
                             <td className='py-2 px-4 size-1/2'>
@@ -62,51 +63,59 @@ const SignatureStyle = () => {
                                     <Input
                                         type="color"
                                         className="w-12 h-12 border border-gray-300 rounded-lg px-1"
-                                        defaultValue="#000000"
+                                        value={design.design.signatureStyle.tempColor}
+                                        onChange={(e) => handleDesign("tempColor", e.target.value)}
                                     />
-                                    <Input type="text" value="#000000" className=" w-24 border border-gray-300 rounded-lg px-1" />
+                                    <Input type="text" className=" w-24 border border-gray-300 rounded-lg px-1" value={design.design.signatureStyle.tempColor}
+                                        onChange={(e) => handleDesign("tempColor", e.target.value)} />
                                 </div>
                             </td>
                         </tr>
 
-                        {/* Font Scale */}
-                        <tr className="border-b">
-                            <td className='py-2 px-4 font-thin'>Font Scale</td>
-                            <td className='py-2 px-4'>
-                                <input
-                                    type="range"
-                                    min="0.5"
-                                    max="2"
-                                    step="0.1"
-                                    className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
-                                />
-                            </td>
-                        </tr>
-
-                        {/* Line Spacing */}
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin'>Line Spacing</td>
                             <td className='py-2 px-4'>
+                                <p className='text-end m-0 text-gray-400'>{design.design.signatureStyle.lineSpacing}</p>
                                 <input
                                     type="range"
-                                    min="1"
-                                    max="2"
-                                    step="0.1"
+                                    min={1}
+                                    max={3}
+                                    step={.1}
+                                    value={design.design.signatureStyle.lineSpacing}
+                                    onChange={(e) => handleDesign("lineSpacing", e.target.value)}
                                     className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
                                 />
                             </td>
                         </tr>
 
-                        {/* Space from Email */}
+                        <tr className="border-b">
+                            <td className='py-2 px-4 font-thin'>Font Scale</td>
+                            <td className='py-2 px-4'>
+                                <p className='text-end m-0 text-gray-400'>{design.design.signatureStyle.fontScale}</p>
+                                <input
+                                    type="range"
+                                    min={1}
+                                    max={12}
+                                    step={1}
+                                    value={design.design.signatureStyle.fontScale}
+                                    onChange={(e) => handleDesign("fontScale", e.target.value)}
+                                    className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
+                                />
+                            </td>
+                        </tr>
+
                         <tr>
                             <td className='py-2 px-4 font-thin size-3/6'>Space from Email</td>
                             <td className='py-2 px-4'>
+                                <p className='text-end m-0 text-gray-400'>{design.design.signatureStyle.spaceFromEmail}</p>
                                 <input
                                     type="range"
-                                    min="0"
-                                    max="50"
-                                    step="5"
-                                    className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
+                                    min={0}
+                                    max={100}
+                                    step={1}
+                                    value={design.design.signatureStyle.spaceFromEmail}
+                                    onChange={(e) => handleDesign("spaceFromEmail", e.target.value)}
+                                    className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer mt-"
                                 />
                             </td>
                         </tr>
@@ -115,7 +124,15 @@ const SignatureStyle = () => {
             </div>
         </>
     )
-    
+
+    async function handleDesign(type: "font" | "tempColor" | "fontScale" | "lineSpacing" | "spaceFromEmail", newValue: "start" | "center" | "end" | number | string) {
+        design.handleDesign({
+            signatureStyle: {
+                ...design.design.signatureStyle,
+                [type]: newValue,
+            },
+        });
+    }
 
 }
 
@@ -193,7 +210,7 @@ const Image = () => {
             },
         });
     }
-    
+
 }
 
 
@@ -356,17 +373,11 @@ const SocialIcons = () => {
 }
 
 const DecorativeLine = () => {
-    const [selectedStyle, setSelectedStyle] = useState(3);
+    const { design } = useAppContext()
 
-    const styleOptions = [
-        { value: 0, label: 'None', preview: 'none' },
-        { value: 1, label: 'Slim', preview: '1px solid black' },
-        { value: 2, label: 'Normal', preview: '2px solid black' },
-        { value: 3, label: 'Heavy', preview: '4px solid black' },
-        { value: 4, label: 'Dotted', preview: '2px dotted black' },
-        { value: 5, label: 'Dashed', preview: '2px dashed black' },
-    ];
-
+    const isThemeColor: boolean = design.design.decorativeLine.matchWithTemplateColor
+    const lineColor: string = design.design.decorativeLine.color
+    const style: number = design.design.decorativeLine.style
 
     return (
         <>
@@ -380,11 +391,11 @@ const DecorativeLine = () => {
                             <td className="py-2 px-4">
                                 <div className="relative">
                                     <Select
-                                        value={selectedStyle}
-                                        onChange={(val) => setSelectedStyle(val)}
+                                        value={style}
+                                        onChange={(val) => handleDesign("style", val)}
                                         className='w-full'
                                     >
-                                        {styleOptions.map((option) => (
+                                        {decorativeLineOptions.map((option) => (
                                             <Select.Option key={option.value} value={option.value} className="flex items-center">
                                                 <span
                                                     className="mr-2"
@@ -402,27 +413,27 @@ const DecorativeLine = () => {
                             </td>
                         </tr>
 
-                        {/* Template Color Selection */}
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin size-1/2'>Match with template color</td>
                             <td className='py-2 px-4 size-1/2 w-full flex justify-end'>
-                                <Switch defaultChecked />
+                                <Switch value={isThemeColor} onChange={(e) => { handleDesign("matchWithTemplateColor", e) }} />
                             </td>
                         </tr>
 
-                        <tr className="border-b">
+                        {!isThemeColor && <tr className="border-b">
                             <td className='py-2 px-4 font-thin size-1/2'>Color</td>
                             <td className='py-2 px-4 size-1/2'>
                                 <div className="flex gap-2 justify-between">
                                     <Input
                                         type="color"
                                         className="w-12 h-12 border border-gray-300 rounded-lg px-1"
-                                        defaultValue="#000000"
+                                        value={lineColor}
+                                        onChange={(e) => handleDesign("color", e.target.value)}
                                     />
-                                    <Input type="text" value="#000000" className=" w-24 border border-gray-300 rounded-lg px-1" />
+                                    <Input type="text" value={lineColor} onChange={(e) => handleDesign("color", e.target.value)} className=" w-24 border border-gray-300 rounded-lg px-1" />
                                 </div>
                             </td>
-                        </tr>
+                        </tr>}
 
                     </tbody>
                 </table>
@@ -431,6 +442,15 @@ const DecorativeLine = () => {
             <div className='mb-48 text-blue-300 hover:text-blue-600 cursor-pointer flex gap-2 items-center w-fit'><CiUndo /> <span>Reset to default</span></div>
         </>
     );
+
+    async function handleDesign(type: "style" | "matchWithTemplateColor" | "color", newValue: number | string | boolean) {
+        design.handleDesign({
+            decorativeLine: {
+                ...design.design.decorativeLine,
+                [type]: newValue,
+            },
+        });
+    }
 };
 
 

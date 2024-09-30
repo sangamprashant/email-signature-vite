@@ -2,7 +2,6 @@ import { Layout, theme } from "antd";
 import React from "react";
 import MenuLeft from "./Elements/MenuLeft";
 import MiddleFields from "./Elements/MiddleFields";
-import TamplateWraper from "./Elements/Templates/TamplateWraper";
 import Template1 from "./Elements/Templates/T1";
 
 const { Header, Content, Sider } = Layout;
@@ -65,7 +64,7 @@ const App: React.FC = () => {
             className="flex justify-center items-start "
           >
             <Template1 />
-         
+
           </Content>
         </Layout>
       </Layout>

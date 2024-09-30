@@ -24,9 +24,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const [design, setDesign] = useState<designProps>({
     signatureStyle: {
       font: "font-sans",
-      tempColor: "pink",
-      fontScale: 24,
-      lineSpacing: 13,
+      tempColor: "#e9078b",
+      lineSpacing: 1.4,
+      fontScale: 4,
       spaceFromEmail: 0,
     },
     images: {
@@ -48,9 +48,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       colorType: "original",
     },
     decorativeLine: {
-      style: "solid",
+      style: 3,
       matchWithTemplateColor: true,
-      color: "#000",
+      color: "#BDBDBD",
     },
   });
 
@@ -125,7 +125,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
         design: {
           design,
           handleDesign,
-        } 
+        }
       }}
     >
       {children}

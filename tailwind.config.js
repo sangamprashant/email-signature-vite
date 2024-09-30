@@ -20,6 +20,10 @@ module.exports = {
         firacode: ["Fira Code", "monospace"],
         inconsolata: ["Inconsolata", "monospace"],
       },
+      fontSize: {
+        'tiny': '0.625rem', 
+        'huge': '5rem',    
+      },
     },
   },
   plugins: [

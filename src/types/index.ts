@@ -58,7 +58,7 @@ export interface socialIconsProps {
 }
 
 export interface decorativeLineProps {
-  style: string;
+  style: number;
   matchWithTemplateColor: boolean;
   color: string;
 }
@@ -82,8 +82,8 @@ export interface AppContextType {
       index: number
     ) => void;
   };
-  design:{
+  design: {
     design: designProps;
     handleDesign: (updatedDesign: Partial<designProps>) => void; // Add this here
-  }
+  };
 }

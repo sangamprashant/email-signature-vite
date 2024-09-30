@@ -1,10 +1,18 @@
 import React from "react";
+import { useAppContext } from "../../../../context";
+import { getTextScale } from "../../../../functions";
 
 interface TamplateWraperProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
+  const { design } = useAppContext();
+
+  const fontScaleValue = Number(design.design.signatureStyle.fontScale);
+  const textScaleClass = getTextScale(fontScaleValue);
+  const marginTopValue = design.design.signatureStyle.spaceFromEmail;
+
   return (
     <div>
       <div
@@ -13,9 +21,11 @@ const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
           width: "700px",
         }}
       >
-        <img src="email-top.png" alt="" />
-        <div className="" id="tamplate-done">
-          <div className="p-4">{children}</div>
+        <img src="email-top.png" alt="Email Top Decoration" />
+        <div id="tamplate-done">
+          <div className={`p-4 ${design.design.signatureStyle.font} ${textScaleClass}`} style={{ lineHeight: design.design.signatureStyle.lineSpacing, marginTop: `${marginTopValue}px` }}>
+            {children}
+          </div>
         </div>
       </div>
       <div className="text-right mt-4">
