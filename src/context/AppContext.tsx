@@ -19,21 +19,40 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     links: [
     ],
   });
+
+  // Design state
   const [design, setDesign] = useState<designProps>({
-    signatureStyle:{
-      font:"font-sans",
-      tempColor:"pink",
-      fontScale:24,
-      lineSpacing:13,
-      spaceFromEmail:0,
+    signatureStyle: {
+      font: "font-sans",
+      tempColor: "pink",
+      fontScale: 24,
+      lineSpacing: 13,
+      spaceFromEmail: 0,
     },
     images: {
-      images: ["https://via.placeholder.com/150", "https://via.placeholder.com/150"],
+      images: ["https://via.placeholder.com/150", "https://via.placeholder.com/150", "https://via.placeholder.com/150", "https://via.placeholder.com/150",],
       shape: "rounded",
       size: 60,
-      position: "start"
-    }
-  })
+      position: "start",
+    },
+    details: {
+      label: "full",
+      direction: "row",
+      separator: "line",
+    },
+    socialIcons: {
+      file: "fill",
+      shape: "rounded",
+      size: 16,
+      spaceBetween: 5,
+      colorType: "original",
+    },
+    decorativeLine: {
+      style: "solid",
+      matchWithTemplateColor: true,
+      color: "#000",
+    },
+  });
 
   const { iconSize } = social_links
 
@@ -103,7 +122,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         menu: { m_item, setM_Item },
         social: { social_links, setSocial_links, addLinks, handleLinkChange },
-        design,
+        design: {
+          design,
+          handleDesign,
+        } 
       }}
     >
       {children}
@@ -117,11 +139,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     }));
   }
 
-  async function handleDesign (){
+  // Function to update the design state
+  function handleDesign(updatedDesign: Partial<designProps>) {
+    setDesign((prev) => ({
+      ...prev,
+      ...updatedDesign,
+    }));
 
   }
-
-};
+}
 
 export const useAppContext = () => {
   const context = useContext(AppContext);

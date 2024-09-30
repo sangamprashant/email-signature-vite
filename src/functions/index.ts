@@ -29,3 +29,7 @@ export function canvasPreview(image: HTMLImageElement, canvas: HTMLCanvasElement
     crop.height
   );
 }
+
+export const handleActive = (isActive: boolean) => {
+  return `flex-1 text-center p-2 cursor-pointer hover:bg-gray-200 ${isActive ? "bg-blue-100 text-blue-500" : ""}`
+}

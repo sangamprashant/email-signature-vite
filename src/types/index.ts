@@ -28,11 +28,11 @@ export type SocialLinksState = {
 };
 
 export interface SignatureStyleProps {
-  font:string;
-  tempColor:string;
-  fontScale:number;
-  lineSpacing:number;
-  spaceFromEmail:number;
+  font: string;
+  tempColor: string;
+  fontScale: number;
+  lineSpacing: number;
+  spaceFromEmail: number;
 }
 
 export type ImageProps = "square" | "rounded" | "circle";
@@ -43,9 +43,32 @@ export interface TemplateImageProps {
   position: "start" | "center" | "end";
 }
 
+export interface detailsPops {
+  label: "full" | "intial" | "icons" | "none";
+  direction: "row" | "col";
+  separator: "line" | "dot" | "square" | "none";
+}
+
+export interface socialIconsProps {
+  file: "fill" | "outline" | "none";
+  shape: "square" | "rounded" | "circle";
+  size: 16 | 17; // 16-32
+  spaceBetween: 3 | 5 | 7 | 9 | 11 | 13;
+  colorType: "original" | "custom";
+}
+
+export interface decorativeLineProps {
+  style: string;
+  matchWithTemplateColor: boolean;
+  color: string;
+}
+
 export interface designProps {
-  signatureStyle:SignatureStyleProps;
+  signatureStyle: SignatureStyleProps;
   images: TemplateImageProps;
+  details: detailsPops;
+  socialIcons: socialIconsProps;
+  decorativeLine: decorativeLineProps;
 }
 
 export interface AppContextType {
@@ -59,5 +82,8 @@ export interface AppContextType {
       index: number
     ) => void;
   };
-  design: designProps;
+  design:{
+    design: designProps;
+    handleDesign: (updatedDesign: Partial<designProps>) => void; // Add this here
+  }
 }

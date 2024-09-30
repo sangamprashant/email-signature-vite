@@ -17,6 +17,8 @@ import { FaFacebookF } from "react-icons/fa";
 import fontOptions from "../../../../../Strings/FontsOptions";
 
 import { CiUndo } from "react-icons/ci";
+import { useAppContext } from '../../../../../context';
+import { handleActive } from '../../../../../functions';
 
 const Customize = () => {
     return (
@@ -31,6 +33,7 @@ const Customize = () => {
 }
 
 const SignatureStyle = () => {
+    const { design } = useAppContext()
     return (
         <>
             <div className="overflow-y-auto scrollbar-thin mb-5">
@@ -41,7 +44,7 @@ const SignatureStyle = () => {
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin'>Font</td>
                             <td className='py-2 px-4'>
-                                <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5">
+                                <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5" value={design.design.signatureStyle.font}>
                                     {fontOptions.map((font) => (
                                         <option key={font.value} value={font.value}>
                                             {font.name}
@@ -112,9 +115,12 @@ const SignatureStyle = () => {
             </div>
         </>
     )
+    
+
 }
 
 const Image = () => {
+    const { design } = useAppContext()
     return (
         <>
             <div className="overflow-y-auto scrollbar-thin mb-5">
@@ -126,13 +132,13 @@ const Image = () => {
                             <td className='py-2 px-4 font-thin'>Shape</td>
                             <td className='py-2 px-4'>
                                 <div className="flex border rounded-md">
-                                    <div className="flex-1 text-center p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(design.design.images.shape === "square")} onClick={() => handleShape("shape", "square")}>
                                         <SquareOutlinedIcon fontSize='small' />
                                     </div>
-                                    <div className="flex-1 text-center border-e border-s p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(design.design.images.shape === "rounded")} onClick={() => handleShape("shape", "rounded")}>
                                         <CropDinOutlinedIcon fontSize='small' />
                                     </div>
-                                    <div className="flex-1 text-center  p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(design.design.images.shape === "circle")} onClick={() => handleShape("shape", "circle")}>
                                         <RadioButtonUncheckedIcon fontSize='small' />
                                     </div>
                                 </div>
@@ -143,12 +149,14 @@ const Image = () => {
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin size-1/2'>Size</td>
                             <td className='py-2 px-4 size-1/2'>
-                                <p className='text-end m-0 text-gray-400'>29</p>
+                                <p className='text-end m-0 text-gray-400'>{design.design.images.size}</p>
                                 <input
+                                    value={design.design.images.size}
+                                    onChange={(e) => handleShape("size", e.target.value)}
                                     type="range"
-                                    min="0.5"
-                                    max="2"
-                                    step="0.1"
+                                    min={0}
+                                    max={150}
+                                    step={1}
                                     className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
                                 />
                             </td>
@@ -159,13 +167,13 @@ const Image = () => {
                             <td className='py-2 px-4 font-thin'>Position</td>
                             <td className='py-2 px-4'>
                                 <div className="flex border rounded-md">
-                                    <div className="flex-1 text-center p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(design.design.images.position === "start")} onClick={() => handleShape("position", "start")}>
                                         <AlignVerticalTopOutlinedIcon fontSize='small' />
                                     </div>
-                                    <div className="flex-1 text-center border-e border-s p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(design.design.images.position === "center")} onClick={() => handleShape("position", "center")}>
                                         <AlignHorizontalCenterOutlinedIcon fontSize='small' />
                                     </div>
-                                    <div className="flex-1 text-center  p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(design.design.images.position === "end")} onClick={() => handleShape("position", "end")}>
                                         <AlignVerticalBottomOutlinedIcon fontSize='small' />
                                     </div>
                                 </div>
@@ -176,7 +184,18 @@ const Image = () => {
             </div>
         </>
     )
+
+    async function handleShape(type: "position" | "shape" | "size", newValue: "start" | "center" | "end" | number | string) {
+        design.handleDesign({
+            images: {
+                ...design.design.images,
+                [type]: newValue,
+            },
+        });
+    }
+    
 }
+
 
 const Details = () => {
     return (
