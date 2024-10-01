@@ -26,6 +26,7 @@ import { Form, Input } from 'antd';
 import { useState } from 'react';
 import { useAppContext } from '../../../../context';
 import { SocialLink } from '../../../../types';
+import { ImageInPlaceOfSvg } from '../Templates/ReuseComponents/SocialLinks';
 
 const SocialPart = () => {
   const { social, menu } = useAppContext()
@@ -204,13 +205,3 @@ const SocialPart = () => {
 };
 
 export default SocialPart;
-
-interface ImageInPlaceOfSvgProps {
-  link: string | undefined
-}
-
-const ImageInPlaceOfSvg = ({ link }: ImageInPlaceOfSvgProps) => {
-  return <>
-    <img width={20} height={20} src={link} />
-  </>
-}

@@ -6,6 +6,7 @@
 
 .main-home-bg {
   background: linear-gradient(120deg, #f3e6ff 0%, #cbe5fd 100%);
+  min-height: 100vh;
 }
 
 ::-webkit-scrollbar {

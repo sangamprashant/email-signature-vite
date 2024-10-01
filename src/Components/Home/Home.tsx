@@ -18,10 +18,10 @@ const Home = () => {
             platforms.
           </p>
           <div className="flex w-full justify-center items-center gap-4">
-            <button className="inline-flex items-center text-white bg-indigo-600 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-700 rounded-full text-lg">
+            <Link to="https://github.com/sangamprashant/email-signature-vite" className="inline-flex items-center text-white bg-indigo-600 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-700 rounded-full text-lg">
               <GitHubIcon className="mr-2" />
               Contribute
-            </button>
+            </Link>
             <Link
               to="/editor"
               className="inline-flex items-center text-white bg-indigo-600 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-700 rounded-full text-lg"
@@ -35,6 +35,7 @@ const Home = () => {
           className="w-full  mb-10 object-cover object-center rounded-lg"
           alt="hero"
           src="/hero.png"
+          loading="lazy"
         />
       </div>
     </section>

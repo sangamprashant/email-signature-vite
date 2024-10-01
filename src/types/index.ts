@@ -53,8 +53,9 @@ export interface socialIconsProps {
   file: "fill" | "outline" | "none";
   shape: "square" | "rounded" | "circle";
   size: 16 | 17; // 16-32
-  spaceBetween: 3 | 5 | 7 | 9 | 11 | 13;
+  spaceBetween: number;
   colorType: "original" | "custom";
+  color?: string;
 }
 
 export interface decorativeLineProps {

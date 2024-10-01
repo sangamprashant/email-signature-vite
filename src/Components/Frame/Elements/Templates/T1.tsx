@@ -2,6 +2,7 @@ import TamplateWraper from "./TamplateWraper";
 import Image from "./ReuseComponents/Image";
 import Name from "./ReuseComponents/Name";
 import DecorativeLine from "./ReuseComponents/DecorativeLine";
+import SocialLinks from "./ReuseComponents/SocialLinks";
 
 const Template1 = () => {
   return (
@@ -11,6 +12,7 @@ const Template1 = () => {
         <div className="flex-1">
           <Name />
           <DecorativeLine />
+          <SocialLinks />
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo fugiat dignissimos reiciendis, vitae voluptatum beatae reprehenderit assumenda odio repellat quidem velit obcaecati, ratione eveniet corrupti iure voluptatibus. In, accusantium odit.
           Distinctio a cupiditate deleniti qui. Pariatur, vitae ipsa totam impedit quis laborum quisquam harum quasi esse accusamus facilis incidunt deserunt amet, mollitia nulla? Pariatur, voluptatum odit commodi corporis nobis nam.
           Consequatur, reiciendis! Similique quae voluptate laboriosam quis porro neque iure, perferendis in possimus quam pariatur quaerat, reiciendis doloribus cumque obcaecati? Impedit recusandae adipisci eos, expedita laborum similique numquam harum sapiente.

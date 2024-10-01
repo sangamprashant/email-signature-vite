@@ -45,11 +45,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       shape: "rounded",
       size: 16,
       spaceBetween: 5,
-      colorType: "original",
+      colorType: "custom",
+      color:"#BDBDBD"
     },
     decorativeLine: {
       style: 3,
-      matchWithTemplateColor: true,
+      matchWithTemplateColor: false,
       color: "#BDBDBD",
     },
   });
@@ -59,7 +60,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const initialSocial: SocialLink[] = [
     {
       icon: <FacebookTwoToneIcon fontSize={iconSize} />,
-      link: "",
+      link: "https://webapp.wisestamp.com/editor",
       bg: "bg-blue-600",
       label: "Facebook", type: "svg"
     },
@@ -86,7 +87,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       label: "Facebook",
       bg: "bg-blue-500",
       icon: "https://avatars.githubusercontent.com/u/93257774?v=4",
-      link: "",
+      link: "https://github.com/sangamprashant",
       type: "image",
     },
   ]

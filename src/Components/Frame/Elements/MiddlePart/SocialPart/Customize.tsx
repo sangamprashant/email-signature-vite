@@ -213,7 +213,6 @@ const Image = () => {
 
 }
 
-
 const Details = () => {
     return (
         <>
@@ -283,6 +282,10 @@ const Details = () => {
 }
 
 const SocialIcons = () => {
+    const { design } = useAppContext()
+    const file = design.design.socialIcons.file
+    const { shape, colorType, spaceBetween, size, color } = design.design.socialIcons
+
     return (
         <>
             <div className="overflow-y-auto scrollbar-thin mb-5">
@@ -293,13 +296,13 @@ const SocialIcons = () => {
                             <td className='py-2 px-4 font-thin'>Fill</td>
                             <td className='py-2 px-4'>
                                 <div className="flex border rounded-md align-middle">
-                                    <div className="flex-1 text-center p-2 border-s cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(file === "fill")} onClick={() => handleDesign("file", "fill")}>
                                         <FacebookIcon fontSize='small' />
                                     </div>
-                                    <div className="flex-1 text-center border-e border-s p-2 cursor-pointer hover:bg-gray-200 flex justify-center items-center">
+                                    <div className={handleActive(file === "outline")} onClick={() => handleDesign("file", "outline")}>
                                         <AiOutlineFacebook fontSize={20} className='m-0 p-0' />
                                     </div>
-                                    <div className="flex-1 text-center p-2 cursor-pointer hover:bg-gray-200 flex justify-center items-center">
+                                    <div className={handleActive(file === "none")} onClick={() => handleDesign("file", "none")}>
                                         <FaFacebookF fontSize={15} />
                                     </div>
                                 </div>
@@ -311,13 +314,13 @@ const SocialIcons = () => {
                             <td className='py-2 px-4 font-thin'>Shape</td>
                             <td className='py-2 px-4'>
                                 <div className="flex border rounded-md">
-                                    <div className="flex-1 text-center p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(shape === "square")} onClick={() => handleDesign("shape", "square")}>
                                         <SquareOutlinedIcon fontSize='small' />
                                     </div>
-                                    <div className="flex-1 text-center border-e border-s p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(shape === "rounded")} onClick={() => handleDesign("shape", "rounded")}>
                                         <CropDinOutlinedIcon fontSize='small' />
                                     </div>
-                                    <div className="flex-1 text-center  p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(shape === "circle")} onClick={() => handleDesign("shape", "circle")}>
                                         <RadioButtonUncheckedIcon fontSize='small' />
                                     </div>
                                 </div>
@@ -327,12 +330,14 @@ const SocialIcons = () => {
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin size-1/2'>Size</td>
                             <td className='py-2 px-4 size-1/2'>
-                                <p className='text-end m-0 text-gray-400'>29</p>
+                                <p className='text-end m-0 text-gray-400'>{size}</p>
                                 <input
                                     type="range"
-                                    min="0.5"
-                                    max="2"
-                                    step="0.1"
+                                    min={1}
+                                    max={50}
+                                    step={1}
+                                    value={size}
+                                    onChange={(e) => handleDesign("size", e.target.value)}
                                     className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
                                 />
                             </td>
@@ -341,12 +346,14 @@ const SocialIcons = () => {
                         <tr className="border-b">
                             <td className='py-2 px-4 font-thin size-1/2'>Space between</td>
                             <td className='py-2 px-4 size-1/2'>
-                                <p className='text-end m-0 text-gray-400'>29</p>
+                                <p className='text-end m-0 text-gray-400'>{spaceBetween}</p>
                                 <input
                                     type="range"
-                                    min="0.5"
-                                    max="2"
-                                    step="0.1"
+                                    min={1}
+                                    max={50}
+                                    step={1}
+                                    value={spaceBetween}
+                                    onChange={(e) => handleDesign("spaceBetween", e.target.value)}
                                     className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
                                 />
                             </td>
@@ -356,20 +363,38 @@ const SocialIcons = () => {
                             <td className='py-2 px-4 font-thin size-1/2'>Color</td>
                             <td className='py-2 px-4 size-1/2'>
                                 <div className="flex border rounded-md align-middle">
-                                    <div className="flex-1 text-center border-e border-s p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(colorType === "original")} onClick={() => handleDesign("colorType", "original")}>
                                         Original
                                     </div>
-                                    <div className="flex-1 text-center border-e border-s p-2 cursor-pointer hover:bg-gray-200">
+                                    <div className={handleActive(colorType === "custom")} onClick={() => handleDesign("colorType", "custom")}>
                                         Custom
                                     </div>
                                 </div>
                             </td>
                         </tr>
+
+                        {colorType === "custom" && <tr className="border-b">
+                            <td className='py-2 px-4 font-thin size-1/2'>Custom Color</td>
+                            <td className='py-2 px-4 size-1/2'>
+                                <Input type='color' value={color} onChange={(e) => handleDesign("color", e.target.value)} />
+                            </td>
+                        </tr>}
+
                     </tbody>
                 </table>
             </div>
         </>
     )
+
+    async function handleDesign(type: "file" | "shape" | "size" | "spaceBetween" | "colorType" | "color", newValue: number | string | boolean) {
+        design.handleDesign({
+            socialIcons: {
+                ...design.design.socialIcons,
+                [type]: newValue,
+            },
+        });
+    }
+
 }
 
 const DecorativeLine = () => {
