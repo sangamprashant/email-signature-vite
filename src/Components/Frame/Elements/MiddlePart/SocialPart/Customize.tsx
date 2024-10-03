@@ -334,7 +334,7 @@ const SocialIcons = () => {
                                 <input
                                     type="range"
                                     min={1}
-                                    max={50}
+                                    max={3}
                                     step={1}
                                     value={size}
                                     onChange={(e) => handleDesign("size", e.target.value)}

@@ -43,10 +43,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     socialIcons: {
       file: "fill",
       shape: "rounded",
-      size: 16,
+      size: 1,
       spaceBetween: 5,
       colorType: "custom",
-      color:"#BDBDBD"
+      color: "#BDBDBD"
     },
     decorativeLine: {
       style: 3,
@@ -122,7 +122,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     <AppContext.Provider
       value={{
         menu: { m_item, setM_Item },
-        social: { social_links, setSocial_links, addLinks, handleLinkChange },
+        social: { social_links, setSocial_links, addLinks, handleLinkChange, handleSocialLinkSize },
         design: {
           design,
           handleDesign,
@@ -146,8 +146,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       ...prev,
       ...updatedDesign,
     }));
-
   }
+
+  async function handleSocialLinkSize(s: Partial<SocialLinksState>) {
+    console.log(s)
+    setSocial_links((prev) => ({
+      ...prev,
+      ...s
+    }));
+  }
+
 }
 
 export const useAppContext = () => {

@@ -21,8 +21,10 @@ export type SocialLink = {
   type?: "svg" | "image";
 };
 
+export type iconSizeProps = "small" | "medium" | "large";
+
 export type SocialLinksState = {
-  iconSize: "small" | "medium" | "large";
+  iconSize: iconSizeProps;
   iconRadius: string;
   links: SocialLink[];
 };
@@ -52,7 +54,7 @@ export interface detailsPops {
 export interface socialIconsProps {
   file: "fill" | "outline" | "none";
   shape: "square" | "rounded" | "circle";
-  size: 16 | 17; // 16-32
+  size: 1 | 2 | 3; // 16-32
   spaceBetween: number;
   colorType: "original" | "custom";
   color?: string;
@@ -82,6 +84,7 @@ export interface AppContextType {
       e: React.ChangeEvent<HTMLInputElement>,
       index: number
     ) => void;
+    handleSocialLinkSize: (s: Partial<SocialLinksState>) => void;
   };
   design: {
     design: designProps;

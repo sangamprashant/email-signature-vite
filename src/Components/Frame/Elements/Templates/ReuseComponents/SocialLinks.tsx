@@ -1,17 +1,29 @@
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../../../../context';
+import { useEffect } from 'react';
 
 const SocialLinks = () => {
   const { social, design } = useAppContext();
   const { links } = social.social_links;
 
-  // Filter valid links
   const linksHasLink = links.filter((l) => l.link.trim() !== "");
 
-  // Destructure design properties
   const { shape, file, size, spaceBetween, colorType, color } = design.design.socialIcons;
 
-  // Define button shape and styles based on file type (fill, outline, none)
+  useEffect(() => {
+    social.handleSocialLinkSize({ iconSize: sizeHandle(size) })
+  }, [size])
+
+  const sizeHandle = (size: 1 | 2 | 3) => {
+    let s = Number(size)
+    switch (s) {
+      case 1: return "small";
+      case 2: return "medium";
+      case 3: return "large";
+      default: return "small";
+    }
+  }
+
   const btnType = (bg: string) => {
     const bgColor = bg.replace("bg-", "");
 
@@ -41,9 +53,6 @@ const SocialLinks = () => {
       {linksHasLink.map((link, index) => (
         <div
           className="icon flex items-center justify-center"
-          style={{
-            fontSize: `${size}px`
-          }}
           key={index}
         >
           {link.type === "svg" ? (
