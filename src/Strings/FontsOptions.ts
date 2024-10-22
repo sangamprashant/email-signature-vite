@@ -29,4 +29,19 @@ const fontOptions = [
   { name: "Inconsolata (Monospace)", value: "font-inconsolata", theme: "dark" },
 ];
 
+export const Buttons = [
+  { title: "Classic", pic: "/template-preview/Template1.jpg" },
+  { title: "Horizontal", pic: "/template-preview/Template2.jpg" },
+  { title: "Wide", pic: "/template-preview/Template3.jpg" },
+  { title: "Compact", pic: "/template-preview/Template4.jpg" },
+  { title: "Stacked", pic: "/template-preview/Template5.jpg" },
+  { title: "Strip", pic: "/template-preview/Template6.jpg" },
+  { title: "RightSide", pic: "/template-preview/Template7.jpg" },
+  { title: "TopBar", pic: "/template-preview/Template8.jpg" },
+  { title: "Social", pic: "/template-preview/Template9.jpg" },
+  { title: "Central", pic: "/template-preview/Template10.jpg" },
+  { title: "Corporate", pic: "/template-preview/Template11.jpg" },
+  { title: "Footer", pic: "/template-preview/Template12.jpg" },
+];
+
 export default fontOptions;

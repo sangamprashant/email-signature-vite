@@ -45,7 +45,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       shape: "rounded",
       size: 1,
       spaceBetween: 5,
-      colorType: "custom",
+      colorType: "original",
       color: "#BDBDBD"
     },
     decorativeLine: {
