@@ -10,6 +10,10 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  // -----------------------------------
+  // for website only
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false)
+  // -----------------------------------
   //menu
   const [m_item, setM_Item] = useState<m_items>("Details");
   // social links
@@ -54,6 +58,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       color: "#BDBDBD",
     },
   });
+
+  // app part 
+  const [appContent, setAppContent] = useState({
+
+
+  })
 
   const { iconSize } = social_links
 
@@ -121,6 +131,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <AppContext.Provider
       value={{
+        // ----------------------------
+        // for website only
+        website: {
+          openDrawer, handleCloseDrawer,handleOpenDrawer
+        },
+        // ----------------------------
+        // for content
         menu: { m_item, setM_Item },
         social: { social_links, setSocial_links, addLinks, handleLinkChange, handleSocialLinkSize },
         design: {
@@ -155,6 +172,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       ...s
     }));
   }
+
+  async function handleCloseDrawer() {
+    setOpenDrawer(false);
+  }
+
+  async function handleOpenDrawer() {
+    setOpenDrawer(true);
+  };
 
 }
 

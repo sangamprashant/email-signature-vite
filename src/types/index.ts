@@ -74,7 +74,14 @@ export interface designProps {
   decorativeLine: decorativeLineProps;
 }
 
+export interface WebsiteProps {
+  openDrawer: boolean;
+  handleCloseDrawer: () => void;
+  handleOpenDrawer: () => void;
+}
+
 export interface AppContextType {
+  website: WebsiteProps;
   menu: Menu;
   social: {
     social_links: SocialLinksState;

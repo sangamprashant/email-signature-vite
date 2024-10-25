@@ -1,10 +1,19 @@
 import {
   FaPencilAlt, FaFileAlt, FaQuoteRight, FaLeaf, FaVideo, FaInstagram,
   FaImages, FaCalendarAlt, FaDollarSign, FaUserFriends, FaBullhorn,
-  FaCode, FaComments, FaGift, FaNewspaper, FaDownload, FaBriefcase
+  FaCode, FaComments, FaGift, FaNewspaper, FaDownload, FaBriefcase, FaSignature
 } from 'react-icons/fa';
 import { IoMdApps } from "react-icons/io";
 import { FcDeleteDatabase } from "react-icons/fc";
+import Sortable from 'sortablejs';
+import { useEffect, useRef, useState } from 'react';
+import { useAppContext } from '../../../../context';
+
+// Type for App Data
+interface AppData {
+  title: string;
+  content: string;
+}
 
 const AppsPart = () => {
   return (
@@ -21,30 +30,52 @@ const AppsPart = () => {
 export default AppsPart;
 
 const SelectedAppContent = () => {
-  const selectData = [
-    {
-      title: "Edit App",
-      content: ""
-    },
-    {
-      title: "Manage App",
-      content: ""
-    },
-    {
-      title: "Customize App",
-      content: ""
-    },
-  ];
+  const [selectData, setSelectData] = useState<AppData[]>([
+    { title: "Edit App", content: "" },
+    { title: "Manage App", content: "" },
+    { title: "Customize App", content: "" },
+  ]);
+
+  const sortableRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (sortableRef.current) {
+      Sortable.create(sortableRef.current, {
+        animation: 150,
+        handle: '.icon',
+        onEnd: (evt) => {
+          const newOrder = [...selectData];
+          const [removed] = newOrder.splice(evt.oldIndex as number, 1);
+          newOrder.splice(evt.newIndex as number, 0, removed);
+          setSelectData(newOrder);
+        },
+      });
+    }
+  }, [selectData]);
+
+  const handleEdit = (item: AppData) => {
+    console.log("Edit", item);
+  };
+
+  const handleDelete = (item: AppData) => {
+    console.log("Delete", item);
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 w-full">
+    <div ref={sortableRef}>
       {selectData.map((d, i) => (
-        <div key={i} className="flex items-center justify-between border w-full p-4 rounded-lg shadow-md hover:bg-gray-50 transition duration-200">
-          <button className="icon mr-4"><IoMdApps className="text-gray-300 text-2xl" /></button>
+        <div key={i} className="flex items-center justify-between border w-full p-4 rounded-lg shadow-md hover:bg-gray-50 transition duration-200 mb-1">
+          <button className="icon mr-4">
+            <IoMdApps className="text-gray-300 text-2xl" />
+          </button>
           <div className="flex-1 text-gray-800 font-semibold">{d.title}</div>
           <div className="flex space-x-2">
-            <button className="text-blue-500 hover:text-blue-600 transition"><FaPencilAlt className="text-blue-500 text-xl" /></button>
-            <button className="text-red-500 hover:text-red-600 transition"><FcDeleteDatabase className="text-blue-500 text-2xl" /></button>
+            <button className="text-blue-500 hover:text-blue-600 transition" onClick={() => handleEdit(d)}>
+              <FaPencilAlt className="text-blue-500 text-xl" />
+            </button>
+            <button className="text-red-500 hover:text-red-600 transition" onClick={() => handleDelete(d)}>
+              <FcDeleteDatabase className="text-blue-500 text-2xl" />
+            </button>
           </div>
         </div>
       ))}
@@ -67,9 +98,15 @@ const SignatureRender = () => {
   );
 };
 
+interface ButtonProps {
+  title: string;
+  icon: JSX.Element;
+}
+
 const EnhanceYourSignature = () => {
-  const Buttons = [
-    { title: "Styled SignOff", icon: <FaPencilAlt className="text-blue-500 text-2xl" /> },
+  const { website } = useAppContext();
+  const Buttons: ButtonProps[] = [
+    { title: "Styled SignOff", icon: <FaSignature className="text-blue-500 text-2xl" /> },
     { title: "Disclaimer", icon: <FaFileAlt className="text-green-500 text-2xl" /> },
     { title: "Quote", icon: <FaQuoteRight className="text-yellow-500 text-2xl" /> },
     { title: "Green Footer", icon: <FaLeaf className="text-green-600 text-2xl" /> },
@@ -80,12 +117,13 @@ const EnhanceYourSignature = () => {
 
   return (
     <>
-      <h5 className="font-bold mb-4 text-xl text-gray-800">Enhance Your Signature</h5>
+      <h5 className="font-bold mb-1 mt-2 text-xl text-gray-800">Enhance Your Signature</h5>
       <div className="grid grid-cols-2 gap-4">
         {Buttons.map((button, index) => (
           <button
             key={index}
             className="flex items-center border border-gray-200 p-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-200"
+            onClick={website.handleOpenDrawer}
           >
             {button.icon}
             <span className="ml-4 text-gray-800 font-medium">{button.title}</span>
@@ -97,7 +135,8 @@ const EnhanceYourSignature = () => {
 };
 
 const CallToAction = () => {
-  const Buttons = [
+  const { website } = useAppContext();
+  const Buttons: ButtonProps[] = [
     { title: "Online scheduler", icon: <FaCalendarAlt className="text-blue-500 text-2xl" /> },
     { title: "Online Payment", icon: <FaDollarSign className="text-green-500 text-2xl" /> },
     { title: "Social buttons", icon: <FaUserFriends className="text-yellow-500 text-2xl" /> },
@@ -116,12 +155,13 @@ const CallToAction = () => {
 
   return (
     <>
-      <h5 className="font-bold mb-4 text-xl text-gray-800">Call to Action</h5>
+      <h5 className="font-bold mb-1 mt-2 text-xl text-gray-800">Call to Action</h5>
       <div className="grid grid-cols-2 gap-4">
         {Buttons.map((button, index) => (
           <button
             key={index}
             className="flex items-center border border-gray-200 p-4 rounded-lg shadow-md hover:bg-gray-100 transition duration-200"
+            onClick={website.handleOpenDrawer}
           >
             {button.icon}
             <span className="ml-4 text-gray-800 font-medium">{button.title}</span>
