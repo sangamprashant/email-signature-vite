@@ -12,6 +12,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   // -----------------------------------
   // for website only
+  const [m_item, setM_Item] = useState<m_items>("Apps");
   const [openDrawer, setOpenDrawer] = useState<boolean>(false)
   const [appPartControls, setAppPartControls] = useState<appPartControlsProps>({
     mouseInCode: 0,
@@ -20,7 +21,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   })
   // -----------------------------------
   //menu
-  const [m_item, setM_Item] = useState<m_items>("Apps");
   // social links
   const [social_links, setSocial_links] = useState<SocialLinksState>({
     iconSize: "small",

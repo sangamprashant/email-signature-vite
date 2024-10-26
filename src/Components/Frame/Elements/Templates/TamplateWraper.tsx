@@ -7,11 +7,20 @@ interface TamplateWraperProps {
 }
 
 const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
-  const { design } = useAppContext();
+  const { design,website } = useAppContext();
 
   const fontScaleValue = Number(design.design.signatureStyle.fontScale);
   const textScaleClass = getTextScale(fontScaleValue);
   const marginTopValue = design.design.signatureStyle.spaceFromEmail;
+
+  // if code is then only render the signature
+  const renderSingnature = () => {
+
+    return<>
+   
+    
+    </>
+  }
 
   return (
     <div>
@@ -24,6 +33,7 @@ const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
         <img src="email-top.png" alt="Email Top Decoration" />
         <div id="tamplate-done">
           <div className={`p-4 ${design.design.signatureStyle.font} ${textScaleClass}`} style={{ lineHeight: design.design.signatureStyle.lineSpacing, marginTop: `${marginTopValue}px` }}>
+            {} 
             {children}
           </div>
         </div>

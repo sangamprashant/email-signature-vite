@@ -9,10 +9,8 @@ const DrawerContentOnCode = () => {
 
     return (
         <div>
-            <p className="text-5xl">
-                {website.appPartControls.selectedCode}
-            </p>
             <Code_1 />
+        
         </div>
     )
 }
