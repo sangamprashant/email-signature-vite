@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 export type m_items =
   | "Details"
@@ -74,10 +74,19 @@ export interface designProps {
   decorativeLine: decorativeLineProps;
 }
 
+export interface appPartControlsProps {
+  mouseInCode: number;
+  selectedCode: number;
+  selectData: Array<{ title: string; content: ReactNode }>;
+}
 export interface WebsiteProps {
   openDrawer: boolean;
   handleCloseDrawer: () => void;
-  handleOpenDrawer: () => void;
+  handleOpenDrawer: (v: number) => void;
+  appPartControls: appPartControlsProps;
+  setAppPartControls: React.Dispatch<
+    React.SetStateAction<appPartControlsProps>
+  >;
 }
 
 export interface AppContextType {

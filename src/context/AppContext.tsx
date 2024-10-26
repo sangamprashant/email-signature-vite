@@ -2,7 +2,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { AppContextType, designProps, m_items, SocialLink, SocialLinksState } from "../types";
+import { AppContextType, appPartControlsProps, designProps, m_items, SocialLink, SocialLinksState } from "../types";
 
 import FacebookTwoToneIcon from '@mui/icons-material/FacebookTwoTone';
 
@@ -13,9 +13,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   // -----------------------------------
   // for website only
   const [openDrawer, setOpenDrawer] = useState<boolean>(false)
+  const [appPartControls, setAppPartControls] = useState<appPartControlsProps>({
+    mouseInCode: 0,
+    selectedCode: 0,
+    selectData: []
+  })
   // -----------------------------------
   //menu
-  const [m_item, setM_Item] = useState<m_items>("Details");
+  const [m_item, setM_Item] = useState<m_items>("Apps");
   // social links
   const [social_links, setSocial_links] = useState<SocialLinksState>({
     iconSize: "small",
@@ -60,10 +65,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   });
 
   // app part 
-  const [appContent, setAppContent] = useState({
-
-
-  })
+  // const [appContent, setAppContent] = useState({
+  // })
 
   const { iconSize } = social_links
 
@@ -134,7 +137,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
         // ----------------------------
         // for website only
         website: {
-          openDrawer, handleCloseDrawer,handleOpenDrawer
+          openDrawer, handleCloseDrawer, handleOpenDrawer, appPartControls, setAppPartControls
         },
         // ----------------------------
         // for content
@@ -177,8 +180,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     setOpenDrawer(false);
   }
 
-  async function handleOpenDrawer() {
+  async function handleOpenDrawer(code: number) {
     setOpenDrawer(true);
+    setAppPartControls((prev) => ({
+      ...prev,
+      selectedCode: code
+    }))
   };
 
 }

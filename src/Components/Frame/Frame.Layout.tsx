@@ -6,6 +6,7 @@ import Template1 from "./Elements/Templates/T1";
 
 import { Drawer } from 'antd';
 import { useAppContext } from "../../context";
+import DrawerContentOnCode from "./Elements/Drawer/DrawerContentOnCode";
 
 const { Header, Content, Sider } = Layout;
 
@@ -62,7 +63,7 @@ const App: React.FC = () => {
           </Layout>
         </Layout>
       </Layout>
-      <Drawer title="Basic Drawer" onClose={website.handleCloseDrawer} open={website.openDrawer} width={1240}>
+      <Drawer title="Basic Drawer" onClose={website.handleCloseDrawer} open={website.openDrawer} width={1400}>
         <Layout style={{ flex: 1, display: "flex", flexDirection: "row" }}>
           <Content
             style={{
@@ -79,7 +80,7 @@ const App: React.FC = () => {
               overflow: "auto",
             }}
           >
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati nihil consequatur dolore commodi aliquid, ut veritatis fugit, nam aspernatur, iure voluptate! Laborum soluta rem dignissimos. Neque sed necessitatibus nisi incidunt?
+            <DrawerContentOnCode />
           </Content>
           <TemplateRender colorText={colorText} />
         </Layout>

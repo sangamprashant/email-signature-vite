@@ -14,7 +14,8 @@ const Template1 = () => {
           <Name />
           <DecorativeLine />
           <SocialLinks />
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo fugiat dignissimos reiciendis, vitae voluptatum beatae reprehenderit assumenda odio repellat quidem velit obcaecati, ratione eveniet corrupti iure voluptatibus. In, accusantium odit.
+          {/* template render */}
+          <h1 className="text-2xl">template render </h1>
           {/* App Content */}
           <AppComponentRender />
         </div>
