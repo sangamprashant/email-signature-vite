@@ -1,13 +1,14 @@
 import React from "react";
 import { useAppContext } from "../../../../context";
 import { getTextScale } from "../../../../functions";
+import AppContentMouseEvent, { StyledSignOff_1 } from "./ReuseComponents/AppContentMouseEvent";
 
 interface TamplateWraperProps {
   children: React.ReactNode;
 }
 
 const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
-  const { design,website } = useAppContext();
+  const { design, website } = useAppContext();
 
   const fontScaleValue = Number(design.design.signatureStyle.fontScale);
   const textScaleClass = getTextScale(fontScaleValue);
@@ -16,9 +17,9 @@ const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
   // if code is then only render the signature
   const renderSingnature = () => {
 
-    return<>
-   
-    
+    return <>
+
+
     </>
   }
 
@@ -33,7 +34,7 @@ const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
         <img src="email-top.png" alt="Email Top Decoration" />
         <div id="tamplate-done">
           <div className={`p-4 ${design.design.signatureStyle.font} ${textScaleClass}`} style={{ lineHeight: design.design.signatureStyle.lineSpacing, marginTop: `${marginTopValue}px` }}>
-            {} 
+            {website.appPartControls.mouseInCode === 1 && <StyledSignOff_1 />}
             {children}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { Button, Layout, theme } from "antd";
+import { Layout, theme } from "antd";
 import React from "react";
 import MenuLeft from "./Elements/MenuLeft";
 import MiddleFields from "./Elements/MiddleFields";
@@ -64,31 +64,24 @@ const App: React.FC = () => {
         </Layout>
       </Layout>
       <Drawer title="Basic Drawer" onClose={website.handleCloseDrawer} open={website.openDrawer} width={1400}>
-        <Layout style={{ flex: 1, display: "flex", flexDirection: "row"}}>
-          <div className="h-full">
-            <Content
-              style={{
-                padding: "5px 24px",
-                margin: 0,
-                minHeight: 280,
-                height: "calc(100vh - 140px)",
-                maxWidth: 400,
-                background: "white",
-                color: colorText,
-                boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
-                marginRight: 16,
-                flex: 1,
-                overflow: "auto",
-              }}
-            >
-              <DrawerContentOnCode />
-            </Content>
-            <div className="mt-2 flex gap-1">
-              <Button type="primary">OK</Button>
-              <Button type="primary" danger >Cancel</Button>
-            </div>
-            
-          </div>
+        <Layout style={{ flex: 1, display: "flex", flexDirection: "row" }} >
+          <Content
+            style={{
+              padding: "5px 24px",
+              margin: 0,
+              minHeight: 280,
+              height: "calc(100vh - 110px)",
+              maxWidth: 400,
+              background: "white",
+              color: colorText,
+              boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+              marginRight: 16,
+              flex: 1,
+              overflow: "auto",
+            }}
+          >
+            <DrawerContentOnCode />
+          </Content>
           <TemplateRender colorText={colorText} />
         </Layout>
       </Drawer>
@@ -111,7 +104,7 @@ const TemplateRender = ({ colorText }: TemplateRenderProps) => {
           margin: 0,
           minHeight: 280,
           color: colorText,
-          height: "calc(100vh - 70px)",
+          height: "calc(100vh - 110px)",
           flex: 1,
         }}
         className="flex justify-center items-start "

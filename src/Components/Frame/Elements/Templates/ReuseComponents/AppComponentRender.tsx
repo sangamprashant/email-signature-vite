@@ -65,7 +65,7 @@ const AppComponentRender: React.FC = () => {
                     {signature || 'Your Signature'}
                 </div>
 
-                {imageSrc && <img src={imageSrc} alt="Signature Preview" className="my-4 border border-gray-300 rounded-lg" />}
+                {/* {imageSrc && <img src={imageSrc} alt="Signature Preview" className="my-4 border border-gray-300 rounded-lg" />} */}
             </div>
             <AppContentMouseEvent />
         </div>

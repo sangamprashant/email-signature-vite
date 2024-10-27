@@ -25,8 +25,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   const [social_links, setSocial_links] = useState<SocialLinksState>({
     iconSize: "small",
     iconRadius: "",
-    links: [
-    ],
+    links: [],
   });
 
   // Design state
@@ -65,8 +64,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   });
 
   // app part 
-  // const [appContent, setAppContent] = useState({
-  // })
+  const [appContent, setAppContent] = useState({
+  })
 
   const { iconSize } = social_links
 
@@ -146,7 +145,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
         design: {
           design,
           handleDesign,
-        }
+        },
+        // appContent:{
+        //   signatureStyle,set
+        // }
       }}
     >
       {children}

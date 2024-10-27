@@ -11,7 +11,7 @@ const AppContentMouseEvent = () => {
 
     const renderContent = (code: number) => {
         switch (code) {
-            case 1: return <StyledSignOff_1 />;
+            // case 1: return <StyledSignOff_1 />;
             case 2: return <DisclaimerContent_2 />;
             case 3: return <QuoteContent_3 />;
             case 4: return <GreenFooterContent_4 />;
@@ -66,22 +66,22 @@ const AppContentMouseEvent = () => {
 export default AppContentMouseEvent;
 // ---------------1-18----------
 
-const StyledSignOff_1 = () => {
+export const StyledSignOff_1 = () => {
     return <div className="">
         <ImageRender link={AppContentImage["name"]} />
     </div>;
 }
 
 const DisclaimerContent_2 = () => {
-    return <div className="disclaimer-content-2"></div>
+    return <div className="disclaimer-content-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi repellat laborum repellendus exercitationem atque rem perspiciatis! Alias maiores, nihil reiciendis itaque consectetur ratione! Eius inventore sapiente veritatis dicta accusamus a?</div>
 }
 
 const QuoteContent_3 = () => {
-    return <div className="quote-content-3"></div>
+    return <div className="quote-content-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro officiis fugit, ex necessitatibus aliquid laudantium veniam commodi. Veritatis, consequatur facilis repellendus similique nesciunt, inventore unde quia incidunt odit impedit explicabo?</div>
 }
 
 const GreenFooterContent_4 = () => {
-    return <div className="green-footer-content-4"></div>
+    return <div className="green-footer-content-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas minima sit magni beatae facere error doloribus, dicta unde nobis, nam omnis? Autem modi reprehenderit ab praesentium omnis nesciunt saepe sit!</div>
 }
 
 
