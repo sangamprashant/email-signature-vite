@@ -20,6 +20,7 @@ import { FcDeleteDatabase } from "react-icons/fc";
 import { IoMdApps } from "react-icons/io";
 import Sortable from 'sortablejs';
 import { useAppContext } from '../../../../context';
+import { AppContentPass } from '../../../../types/AppPart';
 
 const AppsPart = () => {
   return (
@@ -67,12 +68,12 @@ const SelectedAppContent = () => {
 
   return (
     <div ref={sortableRef}>
-      {website.appPartControls.selectData.map((d, i) => (
+      {website.appPartControls.selectData.map((d: AppContentPass, i: number) => (
         <div key={i} className="flex items-center justify-between border w-full p-4 rounded-lg shadow-md hover:bg-gray-50 transition duration-200 mb-1">
           <button className="icon mr-4">
             <IoMdApps className="text-gray-300 text-2xl" />
           </button>
-          <div className="flex-1 text-gray-800 font-semibold">{d.title}</div>
+          <div className="flex-1 text-gray-800 font-semibold">{d?.["website-detiles"]?.code}</div>
           <div className="flex space-x-2">
             <button className="text-blue-500 hover:text-blue-600 transition" onClick={() => handleEdit(d)}>
               <FaPencilAlt className="text-blue-500 text-xl" />

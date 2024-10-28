@@ -5,11 +5,12 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import { AppContextType, appPartControlsProps, designProps, m_items, SocialLink, SocialLinksState } from "../types";
 
 import FacebookTwoToneIcon from '@mui/icons-material/FacebookTwoTone';
+import { AppContentPass } from '../types/AppPart';
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
-export const AppProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+
+export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+
   // -----------------------------------
   // for website only
   const [m_item, setM_Item] = useState<m_items>("Apps");
@@ -19,8 +20,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
     selectedCode: 0,
     selectData: []
   })
+
+  const [appPartControlsLive, setAppPartControlsLive] = useState<AppContentPass | undefined>(undefined)
+
   // -----------------------------------
-  //menu
+  //database if required
+  // -----------------------------------
   // social links
   const [social_links, setSocial_links] = useState<SocialLinksState>({
     iconSize: "small",
@@ -64,8 +69,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   });
 
   // app part 
-  const [appContent, setAppContent] = useState({
-  })
+  // const [appContent, setAppContent] = useState({
+  // })
 
   const { iconSize } = social_links
 
@@ -136,7 +141,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
         // ----------------------------
         // for website only
         website: {
-          openDrawer, handleCloseDrawer, handleOpenDrawer, appPartControls, setAppPartControls
+          openDrawer, handleCloseDrawer, handleOpenDrawer, appPartControls, setAppPartControls, addDrawersContent, addDrawersContentOnChange, appPartControlsLive
         },
         // ----------------------------
         // for content
@@ -180,6 +185,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
 
   async function handleCloseDrawer() {
     setOpenDrawer(false);
+    setAppPartControlsLive(undefined)
   }
 
   async function handleOpenDrawer(code: number) {
@@ -189,6 +195,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
       selectedCode: code
     }))
   };
+
+  // Function to add partial data to selectData array
+  async function addDrawersContent(newItem: AppContentPass) {
+    setAppPartControls((prev) => ({
+      ...prev,
+      selectData: [...prev.selectData, newItem],
+    }))
+  }
+
+  async function addDrawersContentOnChange(newItem: AppContentPass) {
+    setAppPartControlsLive(newItem)
+  }
 
 }
 

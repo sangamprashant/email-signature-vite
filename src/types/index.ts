@@ -1,4 +1,5 @@
-import React, { ReactNode } from "react";
+import React from "react";
+import { AppContentArray, AppContentPass } from "./AppPart";
 
 export type m_items =
   | "Details"
@@ -77,7 +78,7 @@ export interface designProps {
 export interface appPartControlsProps {
   mouseInCode: number;
   selectedCode: number;
-  selectData: Array<{ title: string; content: ReactNode }>;
+  selectData: AppContentArray;
 }
 export interface WebsiteProps {
   openDrawer: boolean;
@@ -87,6 +88,9 @@ export interface WebsiteProps {
   setAppPartControls: React.Dispatch<
     React.SetStateAction<appPartControlsProps>
   >;
+  addDrawersContent: (con: AppContentPass) => void;
+  appPartControlsLive: AppContentPass | undefined;
+  addDrawersContentOnChange: (i: AppContentPass) => void;
 }
 
 export interface AppContextType {

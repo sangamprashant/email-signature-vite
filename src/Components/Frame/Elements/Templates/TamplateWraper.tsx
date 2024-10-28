@@ -1,7 +1,9 @@
 import React from "react";
 import { useAppContext } from "../../../../context";
 import { getTextScale } from "../../../../functions";
-import AppContentMouseEvent, { StyledSignOff_1 } from "./ReuseComponents/AppContentMouseEvent";
+import { StyledSignOff_1 } from "./ReuseComponents/AppContentMouseEvent";
+import ContentLive from "./ReuseComponents/live/ContentLive";
+import HeaderLive from "./ReuseComponents/live/HeaderLive";
 
 interface TamplateWraperProps {
   children: React.ReactNode;
@@ -13,16 +15,6 @@ const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
   const fontScaleValue = Number(design.design.signatureStyle.fontScale);
   const textScaleClass = getTextScale(fontScaleValue);
   const marginTopValue = design.design.signatureStyle.spaceFromEmail;
-
-  // if code is then only render the signature
-  const renderSingnature = () => {
-
-    return <>
-
-
-    </>
-  }
-
   return (
     <div>
       <div
@@ -33,10 +25,14 @@ const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
       >
         <img src="email-top.png" alt="Email Top Decoration" />
         <div id="tamplate-done">
-          <div className={`p-4 ${design.design.signatureStyle.font} ${textScaleClass}`} style={{ lineHeight: design.design.signatureStyle.lineSpacing, marginTop: `${marginTopValue}px` }}>
-            {website.appPartControls.mouseInCode === 1 && <StyledSignOff_1 />}
-            {children}
-          </div>
+          <>
+            <div className={`p-4 ${design.design.signatureStyle.font} ${textScaleClass}`} style={{ lineHeight: design.design.signatureStyle.lineSpacing, marginTop: `${marginTopValue}px` }}>
+              <HeaderLive />
+              {website.appPartControls.mouseInCode === 1 && <StyledSignOff_1 />}
+              {children}
+              <ContentLive />
+            </div>
+          </>
         </div>
       </div>
       <div className="text-right mt-4">

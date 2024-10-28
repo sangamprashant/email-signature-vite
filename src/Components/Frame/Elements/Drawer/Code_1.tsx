@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select, Tooltip } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaAlignCenter, FaAlignLeft, FaAlignRight } from "react-icons/fa";
 import { GoDotFill } from "react-icons/go";
 import { ImUndo } from "react-icons/im";
@@ -12,52 +12,26 @@ import { VscSymbolColor } from "react-icons/vsc";
 import { colorsList, fontOptionsSignature, SignOffData } from '../../../../Strings/FontsOptions';
 import { ImageRender } from '../Templates/ReuseComponents/AppContentMouseEvent';
 import UserConfirm from './UserConfirm';
-
-interface FontStyle {
-    family: string;
-    value: string;
-}
-
-interface SignAsProps {
-    value: string;
-    show: boolean;
-}
-
-interface FontProps {
-    value: string;
-    size: 50 | 100 | 150;
-}
-
-interface AlignmentProps {
-    pos: "start" | "center" | "end";
-}
-
-interface CustomProps {
-    color: string
-    background: string
-    image: string
-}
-
-interface SignatureStyleProps {
-    signoff: FontStyle;
-    "sign-as": SignAsProps;
-    font: FontProps;
-    alignment: AlignmentProps;
-    "custom": CustomProps
-}
+import { useAppContext } from '../../../../context';
+import { AppSignatureProps } from '../../../../types/AppPart';
+import { toPng } from 'html-to-image';
 
 const Code_1 = () => {
+    const { website } = useAppContext()
     const [active, setActive] = useState<number>(0);
     const [signature, setSignature] = useState<SignatureCanvas | null>(null);
     const [image, setImage] = useState<string>("");
     const [signatureHistory, setSignatureHistory] = useState<string[]>([]);
-    const [signatureStyle, setSignatureStyle] = useState<SignatureStyleProps>({
+    const [signatureStyle, setSignatureStyle] = useState<AppSignatureProps>({
+        ui: { active: 0 },
         signoff: { family: '', value: '' },
         "sign-as": { value: '', show: true },
         font: { value: 'Dancing Script, cursive', size: 100 },
         alignment: { pos: "start" },
         custom: { color: "#000000", background: "#FFFFFF", image: '' }
     });
+    const textRef = useRef<HTMLDivElement | null>(null);
+    const [imageSrc, setImageSrc] = useState<string>("");
 
     const Buttons = [
         { title: "Signature", component: <ImageRender link={AppContentImage["name"]} /> },
@@ -77,6 +51,14 @@ const Code_1 = () => {
         setImageToGloble()
     }, [image])
 
+    useEffect(() => {
+        onLiveContentChnage();
+    }, [signatureStyle, active]);
+
+    useEffect(() => {
+        handleAppCode_1Font("custom", "image", imageSrc);
+    }, [imageSrc])
+
     return (
         <>
             <h5 className="text-3xl font-bold text-gray-800 mb-4">SignOff</h5>
@@ -86,7 +68,7 @@ const Code_1 = () => {
                 {Buttons.map((button, index) => (
                     <Tooltip title={`Choose ${button.title}`} key={index}>
                         <button
-                            onClick={() => setActive(index)}
+                            onClick={() => optionSwitch(index)}
                             className={`w-full h-20 flex justify-center items-center border-2 rounded-lg 
                                         transition-all duration-300
                                         ${active === index ? "border-blue-500 bg-blue-50" : "border-gray-200 hover:border-blue-300"}`}
@@ -140,7 +122,9 @@ const Code_1 = () => {
                                                 placeholder="Enter name"
                                                 className="w-full p-1"
                                                 value={signatureStyle['sign-as'].value}
-                                                onChange={(e) => handleAppCode_1Font("sign-as", "value", e.target.value)}
+                                                onChange={(e) => { handleAppCode_1Font("sign-as", "value", e.target.value) }}
+                                                onBlur={generateImage}
+                                                onBlurCapture={generateImage}
                                             />
                                         </Form.Item>
                                     </td>
@@ -152,7 +136,10 @@ const Code_1 = () => {
                                     <Select
                                         className="bg-gray-50 border text-gray-900 text-sm rounded-lg w-full"
                                         value={signatureStyle.font.value}
-                                        onChange={(e) => handleAppCode_1Font("font", "value", e)}
+                                        onChange={(e) => {
+                                            generateImage()
+                                            handleAppCode_1Font("font", "value", e)
+                                        }}
                                     >
                                         {fontOptionsSignature.map((font) => (
                                             <Select.Option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
@@ -239,13 +226,6 @@ const Code_1 = () => {
                             </tr>
                         </React.Fragment>
                     }
-                    {signatureStyle.custom.image && <tr>
-                        <td colSpan={2} className='border'>
-                            <img src={signatureStyle.custom.image} alt="" className='w-full' style={{
-                                height: 200
-                            }} />
-                        </td>
-                    </tr>}
                     <tr>
                         <td className="py-2 px-4 font-thin">Size</td>
                         <td className="py-2 px-4">
@@ -287,13 +267,31 @@ const Code_1 = () => {
                     </tr>
                 </tbody>
             </table>
-            <UserConfirm />
+            <UserConfirm onAdd={onAdd} onCancel={onCancel} />
+            {renderTextToImage()}
         </>
     );
 
+    function onCancel() {
+
+    }
+
+    function onAdd() {
+        website.setAppPartControls((prev) => ({
+            ...prev,
+            selectData: [...prev.selectData, signatureStyle]
+        }))
+
+    }
+
+    function optionSwitch(i: number) {
+        handleAppCode_1Font("ui", "active", i)
+        setActive(i)
+    }
+
     async function handleAppCode_1Font(
-        type: "signoff" | "sign-as" | "font" | "alignment" | "custom",
-        key: "family" | "value" | "show" | "size" | "pos" | "color" | "background" | "image",
+        type: "signoff" | "sign-as" | "font" | "alignment" | "custom" | "ui",
+        key: "family" | "value" | "show" | "size" | "pos" | "color" | "background" | "image" | "active",
         val: string | boolean | number
     ) {
         setSignatureStyle((prev) => ({
@@ -326,7 +324,6 @@ const Code_1 = () => {
             }
         }
     };
-
 
     async function handleSignatureEnd() {
         if (signature) {
@@ -363,6 +360,45 @@ const Code_1 = () => {
     async function setImageToGloble() {
         handleAppCode_1Font("custom", "image", image)
     }
+
+    async function onLiveContentChnage() {
+        const data: AppSignatureProps = {
+            "website-detiles": {
+                code: 1,
+                time: new Date()
+            },
+            ...signatureStyle
+        }
+        website.addDrawersContentOnChange(data)
+    }
+
+    function renderTextToImage() {
+        if (active < 2) {
+            const text = active === 0
+                ? signatureStyle['sign-as'].value
+                : signatureStyle.signoff.family === "Custom"
+                    ? signatureStyle.signoff.value
+                    : signatureStyle.signoff.family;
+            return <>
+                <div ref={textRef} style={{
+                    fontFamily: signatureStyle.font.value, fontSize: `${signatureStyle.font.size/2}px`, // color: styles.color, 
+                    padding: '0px 10px',
+                }}
+                    className='max-w-min'
+                >
+                    {text}
+                </div>
+            </>
+        }
+        return null;
+    }
+
+    async function generateImage() {
+        if (textRef.current) {
+            const dataUrl = await toPng(textRef.current);
+            setImageSrc(dataUrl);
+        }
+    };
 
 };
 
