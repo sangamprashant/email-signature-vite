@@ -16,20 +16,22 @@ import { useAppContext } from '../../../../context';
 import { AppSignatureProps } from '../../../../types/AppPart';
 import { toPng } from 'html-to-image';
 
+const Initila:AppSignatureProps = {
+    ui: { active: 0 },
+    signoff: { family: '', value: '' },
+    "sign-as": { value: '', show: true },
+    font: { value: 'Dancing Script, cursive', size: 100 },
+    alignment: { pos: "start" },
+    custom: { color: "#000000", background: "#FFFFFF", image: '' }
+}
+
 const Code_1 = () => {
     const { website } = useAppContext()
     const [active, setActive] = useState<number>(0);
     const [signature, setSignature] = useState<SignatureCanvas | null>(null);
     const [image, setImage] = useState<string>("");
     const [signatureHistory, setSignatureHistory] = useState<string[]>([]);
-    const [signatureStyle, setSignatureStyle] = useState<AppSignatureProps>({
-        ui: { active: 0 },
-        signoff: { family: '', value: '' },
-        "sign-as": { value: '', show: true },
-        font: { value: 'Dancing Script, cursive', size: 100 },
-        alignment: { pos: "start" },
-        custom: { color: "#000000", background: "#FFFFFF", image: '' }
-    });
+    const [signatureStyle, setSignatureStyle] = useState<AppSignatureProps>(Initila);
     const textRef = useRef<HTMLDivElement | null>(null);
     const [imageSrc, setImageSrc] = useState<string>("");
 
@@ -40,6 +42,7 @@ const Code_1 = () => {
     ];
 
     useEffect(() => {
+        setSignatureStyle(Initila)
         handleAppCode_1Font("sign-as", "show", active !== 1);
     }, [active]);
 
@@ -90,7 +93,10 @@ const Code_1 = () => {
                                     <Select
                                         className="bg-gray-50 border text-gray-900 text-sm rounded-lg w-full"
                                         value={signatureStyle.signoff.value || signatureStyle.signoff.family}
-                                        onChange={(value) => handleAppCode_1Font("signoff", "family", value as string)}
+                                        onChange={(value) => {
+                                            generateImage()
+                                            handleAppCode_1Font("signoff", "family", value as string)
+                                        }}
                                     >
                                         {SignOffData.map((font) => (
                                             <Select.Option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
@@ -381,10 +387,10 @@ const Code_1 = () => {
                     : signatureStyle.signoff.family;
             return <>
                 <div ref={textRef} style={{
-                    fontFamily: signatureStyle.font.value, fontSize: `${signatureStyle.font.size/2}px`, // color: styles.color, 
+                    fontFamily: signatureStyle.font.value, fontSize: `30px`, // color: styles.color, 
                     padding: '0px 10px',
                 }}
-                    className='max-w-min'
+                    className='min-w-min text-nowrap'
                 >
                     {text}
                 </div>

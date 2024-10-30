@@ -1,5 +1,6 @@
 import { useAppContext } from '../../../../context'
 import Code_1 from './Code_1'
+import Code_2_Disclaimer from './Code_2_Disclaimer'
 
 const DrawerContentOnCode = () => {
     const { website } = useAppContext()
@@ -12,7 +13,7 @@ const DrawerContentOnCode = () => {
             case 1:
                 return <Code_1 />
             case 2:
-                return <div>Code 2</div>
+                return <Code_2_Disclaimer />
             case 3:
                 return <div>Code 3</div>
         }

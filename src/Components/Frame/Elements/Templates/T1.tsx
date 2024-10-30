@@ -1,9 +1,8 @@
-import TamplateWraper from "./TamplateWraper";
+import DecorativeLine from "./ReuseComponents/DecorativeLine";
 import Image from "./ReuseComponents/Image";
 import Name from "./ReuseComponents/Name";
-import DecorativeLine from "./ReuseComponents/DecorativeLine";
 import SocialLinks from "./ReuseComponents/SocialLinks";
-import AppComponentRender from "./ReuseComponents/AppComponentRender";
+import TamplateWraper from "./TamplateWraper";
 
 const Template1 = () => {
   return (
@@ -16,8 +15,6 @@ const Template1 = () => {
           <SocialLinks />
           {/* template render */}
           <h1 className="text-2xl">template render </h1>
-          {/* App Content */}
-          <AppComponentRender />
         </div>
       </div>
 

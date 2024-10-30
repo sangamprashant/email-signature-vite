@@ -71,7 +71,7 @@ const App: React.FC = () => {
               margin: 0,
               minHeight: 280,
               height: "calc(100vh - 110px)",
-              maxWidth: 400,
+              maxWidth: 500,
               background: "white",
               color: colorText,
               boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",

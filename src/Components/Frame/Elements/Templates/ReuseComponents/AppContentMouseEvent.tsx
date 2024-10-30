@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../../../../../context";
 import "./AppContentMouseEvent.css"; // Import the CSS file for animations
 import { AppContentImage } from "../../../../../assets/images";
+import { DisclamierString } from "../../../../../Strings/AppString";
 
 const AppContentMouseEvent = () => {
     const { website } = useAppContext();
@@ -12,7 +13,7 @@ const AppContentMouseEvent = () => {
     const renderContent = (code: number) => {
         switch (code) {
             // case 1: return <StyledSignOff_1 />;
-            case 2: return <DisclaimerContent_2 />;
+            case 2: return <DisclaimerContent_2 text={DisclamierString["Confidentiality"]} />;
             case 3: return <QuoteContent_3 />;
             case 4: return <GreenFooterContent_4 />;
             case 5: return <h1>Video Content</h1>;
@@ -72,8 +73,11 @@ export const StyledSignOff_1 = () => {
     </div>;
 }
 
-const DisclaimerContent_2 = () => {
-    return <div className="disclaimer-content-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi repellat laborum repellendus exercitationem atque rem perspiciatis! Alias maiores, nihil reiciendis itaque consectetur ratione! Eius inventore sapiente veritatis dicta accusamus a?</div>
+interface DisclaimerContent_2_Props {
+    text: string
+}
+export const DisclaimerContent_2 = ({ text }: DisclaimerContent_2_Props) => {
+    return <div className="text-[10px] text-gray-500" dangerouslySetInnerHTML={{ __html: text || 'No disclaimer selected' }} />
 }
 
 const QuoteContent_3 = () => {

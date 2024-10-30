@@ -1,8 +1,8 @@
 import React from "react";
 import { useAppContext } from "../../../../context";
 import { getTextScale } from "../../../../functions";
+import AppComponentRender from "./ReuseComponents/AppComponentRender";
 import { StyledSignOff_1 } from "./ReuseComponents/AppContentMouseEvent";
-import ContentLive from "./ReuseComponents/live/ContentLive";
 import HeaderLive from "./ReuseComponents/live/HeaderLive";
 
 interface TamplateWraperProps {
@@ -30,7 +30,7 @@ const TamplateWraper: React.FC<TamplateWraperProps> = ({ children }) => {
               <HeaderLive />
               {website.appPartControls.mouseInCode === 1 && <StyledSignOff_1 />}
               {children}
-              <ContentLive />
+              <AppComponentRender />
             </div>
           </>
         </div>

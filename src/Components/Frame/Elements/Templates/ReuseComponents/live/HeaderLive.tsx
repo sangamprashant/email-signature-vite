@@ -21,8 +21,6 @@ interface DataProps {
 }
 
 const One_Signature = ({ data }: DataProps) => {
-// pos is "start" "center" "end"
-
     return (
         <div className={`flex items-${data.alignment.pos} flex-col w-full`}>
             {data.ui.active === 2 ? (
@@ -35,7 +33,7 @@ const One_Signature = ({ data }: DataProps) => {
                                 {data.signoff.family === "Custom" ? data.signoff.value : data.signoff.family}
                             </p>
                             {data['sign-as'].show && data['sign-as'].value && (
-                                <img src={data.custom.image} alt="Custom Image" style={{ width: `${data.font.size}px` }} />
+                                <img src={data.custom.image} alt="Custom Image" style={{ width: `${data.font.size + 200}px` }} />
                             )}
                         </>
                     ) : (
