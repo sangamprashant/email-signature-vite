@@ -63,7 +63,7 @@ const App: React.FC = () => {
           </Layout>
         </Layout>
       </Layout>
-      <Drawer title="Basic Drawer" onClose={website.handleCloseDrawer} open={website.openDrawer} width={1400}>
+      <Drawer onClose={website.handleCloseDrawer} open={website.openDrawer} width={1400}>
         <Layout style={{ flex: 1, display: "flex", flexDirection: "row" }} >
           <Content
             style={{

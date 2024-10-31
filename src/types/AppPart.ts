@@ -47,15 +47,35 @@ export interface AppSignatureProps {
 // ----------------------------------
 // Disclamier
 // ----------------------------------
-export interface Disclamier {
+// Base interface with shared properties
+export interface BaseContent {
   "website-detiles": appSelectedDetails;
   text: string;
+  color: string;
+  fontSize: number;
+  alignment: string;
+  customColor?: string; // Optional type shorthand
+}
+
+// Specific interfaces that extend the base
+export interface Disclamier extends BaseContent {
+  line: boolean;
+}
+
+export interface App_Quote extends BaseContent {}
+
+export interface App_GreenFooter extends BaseContent {
+  icon: number;
 }
 
 //Binding
 export type AppContentPass =
   | AppSignatureProps
   | Disclamier
+  | App_Quote
+  | App_GreenFooter
   | Partial<AppSignatureProps>
-  | Partial<Disclamier>;
+  | Partial<Disclamier>
+  | Partial<App_Quote>
+  | Partial<App_GreenFooter>;
 export type AppContentArray = Array<AppContentPass>;

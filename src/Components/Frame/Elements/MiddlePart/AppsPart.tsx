@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { AiFillYoutube } from "react-icons/ai";
 import {
   FaBriefcase,
   FaBullhorn,
@@ -7,7 +8,6 @@ import {
   FaFileAlt,
   FaGift,
   FaImages,
-  FaInstagram,
   FaLeaf,
   FaNewspaper,
   FaPencilAlt,
@@ -102,9 +102,8 @@ const EnhanceYourSignature = () => {
     { title: "Disclaimer", icon: <FaFileAlt className="text-green-500 text-2xl" />, code: 2 },
     { title: "Quote", icon: <FaQuoteRight className="text-yellow-500 text-2xl" />, code: 3 },
     { title: "Green Footer", icon: <FaLeaf className="text-green-600 text-2xl" />, code: 4 },
-    { title: "Video", icon: <FaVideo className="text-red-500 text-2xl" />, code: 5 },
-    { title: "Instagram Gallery", icon: <FaInstagram className="text-pink-600 text-2xl" />, code: 6 },
-    { title: "Image Gallery", icon: <FaImages className="text-purple-500 text-2xl" />, code: 7 },
+    { title: "Video", icon: <AiFillYoutube className="text-red-500 text-2xl" />, code: 5 },
+    { title: "Image Gallery", icon: <FaImages className="text-purple-500 text-2xl" />, code: 6 },
   ];
 
   return (
@@ -153,18 +152,18 @@ const CallToAction = () => {
   const { website } = useAppContext();
   const [hoverTimer, setHoverTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
   const Buttons: ButtonProps[] = [
-    { title: "Social buttons", icon: <FaUserFriends className="text-yellow-500 text-2xl" />, code: 8 },
-    { title: "Predesigned banners", icon: <FaBullhorn className="text-green-600 text-2xl" />, code: 9 },
-    { title: "Custom buttons", icon: <FaCode className="text-red-500 text-2xl" />, code: 10 },
-    { title: "Upload my banner", icon: <FaImages className="text-pink-600 text-2xl" />, code: 11 },
-    { title: "Sale event", icon: <FaGift className="text-purple-500 text-2xl" />, code: 12 },
-    { title: "HTML", icon: <FaCode className="text-purple-500 text-2xl" />, code: 13 },
-    { title: "Video Conference", icon: <FaVideo className="text-purple-500 text-2xl" />, code: 14 },
-    { title: "Give feedback", icon: <FaComments className="text-purple-500 text-2xl" />, code: 15 },
-    { title: "Join a webinar", icon: <FaVideo className="text-purple-500 text-2xl" />, code: 16 },
-    { title: "Give newsletter", icon: <FaNewspaper className="text-purple-500 text-2xl" />, code: 17 },
-    { title: "Download app", icon: <FaDownload className="text-purple-500 text-2xl" />, code: 18 },
-    { title: "Post a job offer", icon: <FaBriefcase className="text-purple-500 text-2xl" />, code: 19 },
+    { title: "Social buttons", icon: <FaUserFriends className="text-yellow-500 text-2xl" />, code: 7 },
+    { title: "Predesigned banners", icon: <FaBullhorn className="text-green-600 text-2xl" />, code: 8 },
+    { title: "Custom buttons", icon: <FaCode className="text-red-500 text-2xl" />, code: 9 },
+    { title: "Upload my banner", icon: <FaImages className="text-pink-600 text-2xl" />, code: 10 },
+    { title: "Sale event", icon: <FaGift className="text-purple-500 text-2xl" />, code: 11 },
+    { title: "HTML", icon: <FaCode className="text-purple-500 text-2xl" />, code: 12 },
+    { title: "Video Conference", icon: <FaVideo className="text-purple-500 text-2xl" />, code: 13 },
+    { title: "Give feedback", icon: <FaComments className="text-purple-500 text-2xl" />, code: 14 },
+    { title: "Join a webinar", icon: <FaVideo className="text-purple-500 text-2xl" />, code: 15 },
+    { title: "Give newsletter", icon: <FaNewspaper className="text-purple-500 text-2xl" />, code: 16 },
+    { title: "Download app", icon: <FaDownload className="text-purple-500 text-2xl" />, code: 17 },
+    { title: "Post a job offer", icon: <FaBriefcase className="text-purple-500 text-2xl" />, code: 18 },
   ];
 
   return (

@@ -16,7 +16,7 @@ import { useAppContext } from '../../../../context';
 import { AppSignatureProps } from '../../../../types/AppPart';
 import { toPng } from 'html-to-image';
 
-const Initila:AppSignatureProps = {
+const Initila: AppSignatureProps = {
     ui: { active: 0 },
     signoff: { family: '', value: '' },
     "sign-as": { value: '', show: true },
@@ -279,7 +279,7 @@ const Code_1 = () => {
     );
 
     function onCancel() {
-
+        website.handleCloseDrawer()
     }
 
     function onAdd() {

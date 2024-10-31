@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "../../../../../context";
 import "./AppContentMouseEvent.css"; // Import the CSS file for animations
 import { AppContentImage } from "../../../../../assets/images";
-import { DisclamierString } from "../../../../../Strings/AppString";
+import { appColors, DisclamierString, greenFooterContent, quoteContent } from "../../../../../Strings/AppString";
+import { App_GreenFooter, App_Quote, Disclamier } from "../../../../../types/AppPart";
+import { FaLeaf } from "react-icons/fa";
+import { GiBonsaiTree } from "react-icons/gi";
 
 const AppContentMouseEvent = () => {
     const { website } = useAppContext();
@@ -14,22 +17,9 @@ const AppContentMouseEvent = () => {
         switch (code) {
             // case 1: return <StyledSignOff_1 />;
             case 2: return <DisclaimerContent_2 text={DisclamierString["Confidentiality"]} />;
-            case 3: return <QuoteContent_3 />;
-            case 4: return <GreenFooterContent_4 />;
+            case 3: return <QuoteContent_3 text={quoteContent["Inspiration"]} />;
+            case 4: return <GreenFooterContent_4 text={greenFooterContent["Environmental Responsibility"]} />;
             case 5: return <h1>Video Content</h1>;
-            case 6: return <h1>Instagram Gallery Content</h1>;
-            case 7: return <h1>Image Gallery Content</h1>;
-            case 8: return <h1>Additional Feature 1 Content</h1>;
-            case 9: return <h1>Additional Feature 2 Content</h1>;
-            case 10: return <h1>Additional Feature 3 Content</h1>;
-            case 11: return <h1>Additional Feature 4 Content</h1>;
-            case 12: return <h1>Additional Feature 5 Content</h1>;
-            case 13: return <h1>Additional Feature 6 Content</h1>;
-            case 14: return <h1>Additional Feature 7 Content</h1>;
-            case 15: return <h1>Additional Feature 8 Content</h1>;
-            case 16: return <h1>Additional Feature 9 Content</h1>;
-            case 17: return <h1>Additional Feature 10 Content</h1>;
-            case 18: return <h1>Additional Feature 11 Content</h1>;
             default: return null; // Return null if there's no valid mouseInCode
         }
     };
@@ -76,16 +66,85 @@ export const StyledSignOff_1 = () => {
 interface DisclaimerContent_2_Props {
     text: string
 }
+
 export const DisclaimerContent_2 = ({ text }: DisclaimerContent_2_Props) => {
-    return <div className="text-[10px] text-gray-500" dangerouslySetInnerHTML={{ __html: text || 'No disclaimer selected' }} />
+    const { website } = useAppContext();
+    const { appPartControlsLive } = website;
+    const websiteDetailsCode = appPartControlsLive as Disclamier;
+
+    const colorClass = websiteDetailsCode?.color in appColors ? appColors[websiteDetailsCode?.color] : "text-gray-600";
+    const line = websiteDetailsCode?.line || false
+    const alignment = websiteDetailsCode?.alignment || "start"
+    const fontSize = websiteDetailsCode?.fontSize || 10
+    const color = websiteDetailsCode?.customColor || undefined
+
+    return (
+        <div className="mt-2">
+            {line && < hr className="mb-2" />}
+            <div
+                className={`${colorClass} text-${alignment}`}
+                style={{
+                    fontSize: `${fontSize}px`,
+                    color: color
+                }}
+                dangerouslySetInnerHTML={{ __html: text || 'No disclaimer selected' }}
+            />
+        </div>
+    );
 }
 
-const QuoteContent_3 = () => {
-    return <div className="quote-content-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro officiis fugit, ex necessitatibus aliquid laudantium veniam commodi. Veritatis, consequatur facilis repellendus similique nesciunt, inventore unde quia incidunt odit impedit explicabo?</div>
+interface QuoteContent_3_Props {
+    text: string
 }
 
-const GreenFooterContent_4 = () => {
-    return <div className="green-footer-content-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas minima sit magni beatae facere error doloribus, dicta unde nobis, nam omnis? Autem modi reprehenderit ab praesentium omnis nesciunt saepe sit!</div>
+export const QuoteContent_3 = ({ text }: QuoteContent_3_Props) => {
+    const { website } = useAppContext();
+    const { appPartControlsLive } = website;
+    const websiteDetailsCode = appPartControlsLive as App_Quote;
+    const colorClass = websiteDetailsCode?.color in appColors ? appColors[websiteDetailsCode?.color] : "text-gray-600";
+    const alignment = websiteDetailsCode?.alignment || "start"
+    const fontSize = websiteDetailsCode?.fontSize || 10
+    const color = websiteDetailsCode?.customColor || undefined
+    return <div className="mt-2">
+        <div
+            className={`${colorClass} text-${alignment}`}
+            style={{
+                fontSize: `${fontSize}px`,
+                color: color
+            }}
+            dangerouslySetInnerHTML={{ __html: text || 'No disclaimer selected' }}
+        />
+    </div>
+}
+
+interface GreenFooterContent_4_Props {
+    text: string
+}
+
+export const GreenFooterContent_4 = ({ text }: GreenFooterContent_4_Props) => {
+    const { website } = useAppContext();
+    const { appPartControlsLive } = website;
+    const websiteDetailsCode = appPartControlsLive as App_GreenFooter;
+    const colorClass = websiteDetailsCode?.color in appColors ? appColors[websiteDetailsCode?.color] : "text-green-600";
+    const alignment = websiteDetailsCode?.alignment || "start"
+    const fontSize = websiteDetailsCode?.fontSize || 10
+    const color = websiteDetailsCode?.customColor || undefined
+    const icon = websiteDetailsCode?.icon || 1
+
+    return <div className={`flex mt-2 items-center justify-${alignment}`}>
+        {icon < 3 && <div className="mx-2 border-r px-2">
+            {icon === 2 ? <GiBonsaiTree className="text-green-700" fontSize={40} /> :
+                <FaLeaf className="text-green-700" fontSize={40} />}
+        </div>}
+        <div
+            className={`${colorClass}`}
+            style={{
+                fontSize: `${fontSize}px`,
+                color: color
+            }}
+            dangerouslySetInnerHTML={{ __html: text || 'No disclaimer selected' }}
+        />
+    </div>
 }
 
 
