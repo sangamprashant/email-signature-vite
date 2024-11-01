@@ -3,7 +3,7 @@ import { useAppContext } from "../../../../../context";
 import "./AppContentMouseEvent.css"; // Import the CSS file for animations
 import { AppContentImage } from "../../../../../assets/images";
 import { appColors, DisclamierString, greenFooterContent, quoteContent } from "../../../../../Strings/AppString";
-import { App_GreenFooter, App_Quote, Disclamier } from "../../../../../types/AppPart";
+import { App_GreenFooter, App_Quote, App_VideoContent, Disclamier } from "../../../../../types/AppPart";
 import { FaLeaf } from "react-icons/fa";
 import { GiBonsaiTree } from "react-icons/gi";
 
@@ -19,7 +19,7 @@ const AppContentMouseEvent = () => {
             case 2: return <DisclaimerContent_2 text={DisclamierString["Confidentiality"]} />;
             case 3: return <QuoteContent_3 text={quoteContent["Inspiration"]} />;
             case 4: return <GreenFooterContent_4 text={greenFooterContent["Environmental Responsibility"]} />;
-            case 5: return <h1>Video Content</h1>;
+            case 5: return <VideoContent_5  />;
             default: return null; // Return null if there's no valid mouseInCode
         }
     };
@@ -159,5 +159,14 @@ export const ImageRender = ({ link }: ImageRender) => {
             maxHeight: "150px",
             maxWidth: "150px",
         }} />
+    </>
+}
+
+export const VideoContent_5 = () => {
+    const { website } = useAppContext();
+    const { appPartControlsLive } = website;
+    const websiteDetailsCode = appPartControlsLive as App_VideoContent;
+    return <>
+       
     </>
 }

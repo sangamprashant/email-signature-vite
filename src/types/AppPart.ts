@@ -68,14 +68,21 @@ export interface App_GreenFooter extends BaseContent {
   icon: number;
 }
 
+export interface App_VideoContent extends BaseContent {
+  url: string;
+  style: 1 | 2;
+}
+
 //Binding
 export type AppContentPass =
   | AppSignatureProps
   | Disclamier
   | App_Quote
   | App_GreenFooter
+  | App_VideoContent
   | Partial<AppSignatureProps>
   | Partial<Disclamier>
   | Partial<App_Quote>
-  | Partial<App_GreenFooter>;
+  | Partial<App_GreenFooter>
+  | Partial<App_VideoContent>;
 export type AppContentArray = Array<AppContentPass>;
