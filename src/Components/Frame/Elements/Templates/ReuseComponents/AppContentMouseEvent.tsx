@@ -6,6 +6,7 @@ import { appColors, DisclamierString, greenFooterContent, quoteContent } from ".
 import { App_GreenFooter, App_Quote, App_VideoContent, Disclamier } from "../../../../../types/AppPart";
 import { FaLeaf } from "react-icons/fa";
 import { GiBonsaiTree } from "react-icons/gi";
+import { getEmbedUrl } from "../../../../../functions";
 
 const AppContentMouseEvent = () => {
     const { website } = useAppContext();
@@ -19,8 +20,8 @@ const AppContentMouseEvent = () => {
             case 2: return <DisclaimerContent_2 text={DisclamierString["Confidentiality"]} />;
             case 3: return <QuoteContent_3 text={quoteContent["Inspiration"]} />;
             case 4: return <GreenFooterContent_4 text={greenFooterContent["Environmental Responsibility"]} />;
-            case 5: return <VideoContent_5  />;
-            default: return null; // Return null if there's no valid mouseInCode
+            case 5: return <VideoContent_5 />;
+            default: return null;
         }
     };
 
@@ -147,7 +148,6 @@ export const GreenFooterContent_4 = ({ text }: GreenFooterContent_4_Props) => {
     </div>
 }
 
-
 interface ImageRender {
     link: string;
 }
@@ -166,7 +166,24 @@ export const VideoContent_5 = () => {
     const { website } = useAppContext();
     const { appPartControlsLive } = website;
     const websiteDetailsCode = appPartControlsLive as App_VideoContent;
+    const fontSize = websiteDetailsCode?.fontSize || 10
+    const alignment = websiteDetailsCode?.alignment || "start"
+    const style = websiteDetailsCode?.style || 1
     return <>
-       
+        <div className={`my-2 py-2 flex items-start justify-${alignment} ${style === 1 ? "" : "border-b border-t"} `}>
+            <div className={`flex flex-${style === 1 ? "col " : "gap-3"}  w-auto`}>
+                {websiteDetailsCode?.url && <iframe
+                    width={200}
+                    height={100}
+                    src={getEmbedUrl(websiteDetailsCode?.url) || "https://www.youtube.com/embed/default"}
+                    title="YouTube video player"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>}
+                {websiteDetailsCode?.text && <div className="" style={{ color: websiteDetailsCode?.customColor || websiteDetailsCode?.color, fontSize: `${fontSize}px` }}>
+                    <h3>{websiteDetailsCode?.text}</h3>
+                </div>}
+            </div>
+        </div>
     </>
 }

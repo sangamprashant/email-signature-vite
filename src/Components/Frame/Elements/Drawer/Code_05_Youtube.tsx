@@ -1,34 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableLayout from "../Reuse/Table/Table.Layout";
 import TableTd from "../Reuse/Table/TableTd";
 import TableTr from "../Reuse/Table/TableTr";
 import { Alignment, Color, FontSize } from "./Reuse";
 import { Form, Input } from "antd";
+import { App_VideoContent } from "../../../../types/AppPart";
+import { useAppContext } from "../../../../context";
 
 const Code_05_Youtube = () => {
+    const { website } = useAppContext()
     const [videoUrl, setVideoUrl] = useState("");
     const [title, setTitle] = useState("");
     const [color, setColor] = useState("");
     const [customColor, setCustomColor] = useState<string | undefined>(undefined);
     const [fontSize, setFontSize] = useState(10);
     const [alignment, setAlignment] = useState("start");
-    const [isCompact, setIsCompact] = useState(true);
+    const [isCompact, setIsCompact] = useState<1 | 2>(1);
+
+    const time = new Date();
 
 
-    const getEmbedUrl = (url: string) => {
-
-        const standardMatch = url.match(/(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/);
-        if (standardMatch) {
-            return `https://www.youtube.com/embed/${standardMatch[1]}`;
-        }
-
-        const shortMatch = url.match(/(?:https?:\/\/)?youtu\.be\/([a-zA-Z0-9_-]+)/);
-        if (shortMatch) {
-            return `https://www.youtube.com/embed/${shortMatch[1]}`;
-        }
-
-        return "";
-    };
+    useEffect(() => {
+        onLiveContentChange();
+    }, [title, color, fontSize, alignment, customColor, videoUrl, isCompact]);
 
 
     return (
@@ -55,19 +49,19 @@ const Code_05_Youtube = () => {
                                 <input
                                     type="radio"
                                     name="style"
-                                    checked={isCompact}
-                                    onChange={() => setIsCompact(true)}
+                                    checked={isCompact === 1}
+                                    onChange={() => setIsCompact(1)}
                                 />{" "}
-                                Compact
+                                Vertical
                             </label>
                             <label className="ml-4">
                                 <input
                                     type="radio"
                                     name="style"
-                                    checked={!isCompact}
-                                    onChange={() => setIsCompact(false)}
+                                    checked={isCompact === 2}
+                                    onChange={() => setIsCompact(2)}
                                 />{" "}
-                                Expanded
+                                Horizontal
                             </label>
                         </div>
                     </TableTd>
@@ -76,23 +70,26 @@ const Code_05_Youtube = () => {
                 <FontSize fontSize={fontSize} setFontSize={setFontSize} />
                 <Alignment alignment={alignment} setAlignment={setAlignment} />
             </TableLayout>
-
-            {/* Preview */}
-            <div className="mt-8 p-4 border rounded" style={{ color: customColor || color, fontSize: `${fontSize}px` }}>
-                <h3 className="text-xl font-semibold mb-2">{title || "YouTube Video Title"}</h3>
-                <div>
-                    <iframe
-                        width={isCompact ? "300" : "560"}
-                        height={isCompact ? "150" : "315"}
-                        src={getEmbedUrl(videoUrl) || "https://www.youtube.com/embed/default"}
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    ></iframe>
-                </div>
-            </div>
         </>
     );
+
+    async function getDisclaimerData(): Promise<App_VideoContent> {
+        return {
+            "website-detiles": { code: 5, time: time },
+            text: title,
+            url: videoUrl,
+            style: isCompact,
+            color,
+            fontSize,
+            alignment,
+            customColor
+        };
+    }
+
+    async function onLiveContentChange() {
+        const data = await getDisclaimerData();
+        website.addDrawersContentOnChange(data);
+    }
 };
 
 export default Code_05_Youtube;
