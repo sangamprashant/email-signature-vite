@@ -1,77 +1,130 @@
-import React, { useState } from 'react';
-import Cropper from 'react-easy-crop';
+import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone";
+import { Button, Modal } from 'antd';
+import React, { useRef, useState } from 'react';
+import ReactCrop, { Crop, PixelCrop } from 'react-image-crop';
+import { canvasPreview } from '../../../../functions';
 
 const Code_06_ImageGallery = () => {
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [croppedImages, setCroppedImages] = useState<string[]>([]);
-    const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(1);
-    const [showCropModal, setShowCropModal] = useState(false);
+    const [imageSrc, setImageSrc] = useState<string | null>(null);
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [crop, setCrop] = useState<Crop>({
+        unit: '%',
+        width: 50,
+        height: 50,
+        x: 25,
+        y: 25,
+    });
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
+    const [completedCrop, setCompletedCrop] = useState<PixelCrop | null>(null);
+    const imageRef = useRef<HTMLImageElement | null>(null);
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file && file.type.startsWith("image/")) {
             const reader = new FileReader();
-            reader.onload = () => {
-                setSelectedImage(reader.result as string);
-                setShowCropModal(true);
-            };
+            reader.onload = () => setImageSrc(reader.result as string);
             reader.readAsDataURL(file);
+            setIsModalVisible(true);
         }
+    };
+
+    const handleSaveCroppedImage = () => {
+        if (completedCrop && imageRef.current) {
+            const canvas = document.createElement('canvas');
+            canvasPreview(imageRef.current, canvas, completedCrop);
+            canvas.toBlob((blob) => {
+                if (!blob) return;
+                const croppedUrl = URL.createObjectURL(blob);
+                setCroppedImages(pre => [
+                    ...pre, croppedUrl
+                ])
+            });
+            handleCropCancel()
+            setIsModalVisible(false);
+        }
+    };
+
+    const handleCropComplete = (crop: PixelCrop) => {
+        setCompletedCrop(crop);
+    };
+
+    const handleCropCancel = () => {
+        setIsModalVisible(false);
+        setCrop({ unit: '%', width: 50, height: 50, x: 25, y: 25 });
     };
 
 
 
+
     return (
-        <div>
+        <>
             <h2 className="text-3xl font-bold mb-4">Add an Image Gallery</h2>
             <p className="text-gray-600 mb-2">Add your images:</p>
 
             <div className="flex gap-1 flex-wrap">
-                {/* Render cropped images in gallery */}
-                {croppedImages.map((image, index) => (
+
+                {croppedImages && croppedImages.map((image, index) => (
                     <div key={index} className="h-16 w-16 border-dashed border-2">
                         <img src={image} alt={`Cropped ${index + 1}`} className="w-full h-full object-cover" />
                     </div>
                 ))}
 
-                {/* Only show file input if less than 4 images are in the gallery */}
                 {croppedImages.length < 4 && (
-                    <label className="h-16 w-16 border-dashed border-2 cursor-pointer" htmlFor="galleryImage">
-                        <input type="file" id="galleryImage" className="hidden" accept="image/*" onChange={handleImageChange} />
-                        <span className="block text-center">+</span>
+                    <label
+                        htmlFor="file-upload"
+                        className="h-16 w-16 border-dashed border-2 rounded hover:border-blue-300 cursor-pointer text-[12px] text-center font-thin text-blue-500 flex items-center justify-center"
+                    >
+                        <AddCircleTwoToneIcon fontSize="small" aria-label="Upload Icon" />
+                        <input
+                            id="file-upload"
+                            type="file"
+                            accept="image/*"
+                            style={{ display: "none" }}
+                            onChange={handleFileUpload}
+                            className="w-0"
+                        />
                     </label>
                 )}
 
                 {/* Placeholder for additional images if less than 4 images are added */}
-                {Array.from({ length: 4 - croppedImages.length }).map((_, index) => (
+                {Array.from({ length: 3 - croppedImages.length }).map((_, index) => (
                     <div key={`placeholder-${index}`} className="h-16 w-16 border-dashed border-2"></div>
                 ))}
             </div>
 
-            {/* Crop modal */}
-            {showCropModal && (
-                <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black bg-opacity-75 z-50">
-                    <div className="relative w-full max-w-lg bg-white p-4 rounded-md">
-                        <Cropper
-                            image={selectedImage || ''}
+            <Modal
+                title="Crop Image"
+                open={isModalVisible}
+                onCancel={handleCropCancel}
+                footer={[
+                    <Button key="cancel" onClick={handleCropCancel}>
+                        Cancel
+                    </Button>,
+                    <Button key="save" type="primary" onClick={handleSaveCroppedImage}>
+                        Save
+                    </Button>,
+                ]}
+            >
+                <div className="flex justify-center">
+                    {imageSrc && (
+                        <ReactCrop
                             crop={crop}
-                            zoom={zoom}
+                            onChange={(newCrop) => setCrop(newCrop)}
+                            onComplete={(newCrop) => handleCropComplete(newCrop)}
                             aspect={1}
-                            onCropChange={setCrop}
-                            onZoomChange={setZoom}
-                            onCropComplete={onCropComplete}
-                        />
-                        <button
-                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-                            onClick={() => setShowCropModal(false)}
                         >
-                            Crop
-                        </button>
-                    </div>
+                            <img
+                                ref={imageRef}
+                                src={imageSrc}
+                                alt="Crop"
+                                style={{ maxHeight: "400px", maxWidth: "100%" }}
+                            />
+                        </ReactCrop>
+                    )}
                 </div>
-            )}
-        </div>
+            </Modal>
+        </>
     );
 };
 
