@@ -20,39 +20,7 @@ const Code_06_ImageGallery = () => {
         }
     };
 
-    const onCropComplete = (croppedArea: any, croppedAreaPixels: any) => {
-        const canvas = document.createElement('canvas');
-        const img = new Image();
-        img.src = selectedImage || '';
-        img.onload = () => {
-            const ctx = canvas.getContext('2d');
-            const sideLength = Math.min(croppedAreaPixels.width, croppedAreaPixels.height);
-            canvas.width = sideLength;
-            canvas.height = sideLength;
 
-            if (ctx) {
-                ctx.drawImage(
-                    img,
-                    croppedAreaPixels.x,
-                    croppedAreaPixels.y,
-                    sideLength,
-                    sideLength,
-                    0,
-                    0,
-                    sideLength,
-                    sideLength
-                );
-
-                // Save the cropped image to the gallery array
-                setCroppedImages((prevImages) => [
-                    ...prevImages,
-                    canvas.toDataURL('image/jpeg')
-                ]);
-                setShowCropModal(false);
-                setSelectedImage(null);
-            }
-        };
-    };
 
     return (
         <div>
