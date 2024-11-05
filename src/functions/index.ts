@@ -36,7 +36,7 @@ export function canvasPreview(
 
 export const handleActive = (isActive: boolean) => {
   return `flex-1 text-center p-2 cursor-pointer hover:bg-gray-200 hover:text-blue-300 flex justify-center items-center ${
-    isActive ? "bg-blue-100 text-blue-500" : ""
+    isActive ? "bg-blue-100 text-blue-500" : "text-gray-300"
   }`;
 };
 
